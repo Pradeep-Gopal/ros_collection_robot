@@ -1,0 +1,37 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="collection_cube_F">
+    <static>false</static>
+      <link name='collection_cube_F'>
+        <collision name='collection_cube_F'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cube_F/meshes/F.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+
+        <visual name='collection_cube_F'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+            <mesh>
+              <uri>model://cube_F/meshes/F.dae</uri>
+              <scale>1 1 1</scale>
+            </mesh>
+          </geometry>
+        </visual>
+  </link>
+  </model>
+</sdf>
