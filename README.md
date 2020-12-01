@@ -31,7 +31,7 @@ manipulator arm mounted on top, controlled using MoveIt. It can be controlled by
 velocity using a topic in ROS. We also assume that using the wheel odometry the robot knows its own pose in the world. 
 The robot has two sensors, a LIDAR and camera. 
 
-![Warehouse map](https://github.com/Pradeep-Gopal/ros_collection_robot/images/map.png)
+![Warehouse map](images/map.png)
 
 ## Agile Iterative Process (AIP)
 This project was completed using AIP with the involvement of 3 programmers using Pair-programming in turns. The detailed Product Backlog, Iteration Backlogs and Work Log are mentioned in the link given below :
@@ -72,6 +72,10 @@ catkin_make
 source devel/setup.bash
 ```
 ## Steps to Run the Package
+
+The package will spawn the TurtleBot3 with OpenManipulator in a custom Warehouse environment with obstacles. 
+It also spawns the different objects which has to be collected and delivered by the robot.
+
 ```
 cd catkin_ws/src
 
