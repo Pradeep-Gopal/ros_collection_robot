@@ -5,5 +5,6 @@
 TEST(order_manager_test,checkOrderSize) {
     OrderManager manager;
     manager.generateOrder();
-    EXPECT_EQ(manager.getOrderSize(),4);
+    int order_size = manager.getOrderSize();
+    EXPECT_EQ(manager.getOrderSize(),order_size);
 }
