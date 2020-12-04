@@ -29,3 +29,21 @@ include_directories(
 
 add_executable(order_manager src/order_manager.cpp)
 target_link_libraries(order_manager ${catkin_LIBRARIES})
+
+# if(CATKIN_ENABLE_TESTING)
+#     find_package(rostest REQUIRED)
+#     add_rostest_gtest(
+#             order_manager_test
+#             test/order_manager_test.launch
+#             test/order_manager_test.cpp
+#             test/main.cpp
+#     )
+#     target_link_libraries(
+#             order_manager_test
+#             ${catkin_LIBRARIES}
+#     )
+#     add_dependencies(
+#             order_manager_test
+#             ${catkin_EXPORTED_TARGETS}
+#     )
+# endif()
