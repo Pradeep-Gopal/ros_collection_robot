@@ -5,6 +5,11 @@
 TEST(order_manager_test,checkOrderSize) {
     OrderManager manager;
     manager.generateOrder();
-    int order_size = manager.getOrderSize();
-    EXPECT_EQ(manager.getOrderSize(),order_size);
+    EXPECT_EQ(manager.getOrderSize(),4);
+}
+
+TEST(order_manager_test,checkTotalCubes) {
+    OrderManager manager;
+    manager.spawnCubes();
+    EXPECT_EQ(manager.getTotalCubes(),8);
 }
