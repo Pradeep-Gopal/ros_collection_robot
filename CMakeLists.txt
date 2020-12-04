@@ -22,6 +22,9 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
 )
 
+## Declare a catkin package
+catkin_package()
+
 include_directories(
   ${catkin_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/include
