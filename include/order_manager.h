@@ -1,8 +1,7 @@
 #pragma once
-#include<vector>
-#include <ros/ros.h>
+#include <vector>
 
-class OrderManager(){
+class OrderManager{
 
 private:
 
@@ -17,4 +16,4 @@ public:
 	
 	void generateOrder();
 	void spawnCubes();
-}
+};

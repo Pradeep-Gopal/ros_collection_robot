@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0.2)
 project(ros_collection_robot)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
-add_compile_options(-std=c++11)
+# add_compile_options(-std=c++11)
 
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
@@ -22,10 +22,10 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
 )
 
-add_executable(ros_collection_robot src/main.cpp src/order_manager.cpp)
-
 include_directories(
-    ${CMAKE_SOURCE_DIR}/include
+  ${catkin_INCLUDE_DIRS}
+  ${CMAKE_SOURCE_DIR}/include
 )
 
-target_link_libraries(ros_collection_robot ${catkin_LIBRARIES})
+add_executable(order_manager src/order_manager.cpp)
+target_link_libraries(order_manager ${catkin_LIBRARIES})
