@@ -1,12 +1,8 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(ros_collection_robot)
 
-## Compile as C++11, supported in ROS Kinetic and newer
-# add_compile_options(-std=c++11)
+add_compile_options(-std=c++11)
 
-## Find catkin macros and libraries
-## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
-## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   geometry_msgs
   moveit_core
@@ -22,7 +18,6 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
 )
 
-## Declare a catkin package
 catkin_package()
 
 include_directories(
@@ -30,23 +25,24 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/include
 )
 
-add_executable(order_manager src/order_manager.cpp)
+add_executable(order_manager src/order_manager.cpp src/main.cpp)
 target_link_libraries(order_manager ${catkin_LIBRARIES})
 
-# if(CATKIN_ENABLE_TESTING)
-#     find_package(rostest REQUIRED)
-#     add_rostest_gtest(
-#             order_manager_test
-#             test/order_manager_test.launch
-#             test/order_manager_test.cpp
-#             test/main.cpp
-#     )
-#     target_link_libraries(
-#             order_manager_test
-#             ${catkin_LIBRARIES}
-#     )
-#     add_dependencies(
-#             order_manager_test
-#             ${catkin_EXPORTED_TARGETS}
-#     )
-# endif()
+if(CATKIN_ENABLE_TESTING)
+    find_package(rostest REQUIRED)
+    add_rostest_gtest(
+            order_manager_test
+            test/order_manager_test.launch
+            test/order_manager_test.cpp
+            test/main.cpp
+            src/order_manager.cpp
+    )
+    target_link_libraries(
+            order_manager_test
+            ${catkin_LIBRARIES}
+    )
+    add_dependencies(
+            order_manager_test
+            ${catkin_EXPORTED_TARGETS}
+    )
+endif()

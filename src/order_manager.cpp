@@ -23,8 +23,3 @@ std::vector<char> OrderManager::getCubes(){
 	return cubes_;
 }
 
-int main(int argc, char **argv){
-    ros::init(argc, argv, "order_manager");
-    OrderManager manager;
-    manager.generateOrder();
-}

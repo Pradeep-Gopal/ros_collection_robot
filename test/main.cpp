@@ -1,5 +1,6 @@
 #include <gtest/gtest.h>
 #include <ros/ros.h>
+#include <ros/service_client.h>
 
 int main(int argc,
          char **argv) {

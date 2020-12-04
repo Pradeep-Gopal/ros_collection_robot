@@ -1,9 +1,9 @@
-#include <gtest/gtest.h>
 #include "ros/ros.h"
 #include "../include/order_manager.h"
 
-TEST(order_manager_test,checkOrderSize) {
+
+int main(int argc, char **argv){
+    ros::init(argc, argv, "order_manager");
     OrderManager manager;
     manager.generateOrder();
-    EXPECT_EQ(manager.getOrderSize(),4);
 }
