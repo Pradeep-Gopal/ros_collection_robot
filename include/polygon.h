@@ -12,8 +12,8 @@ private:
     geometry_msgs::Point centroid_;
     std::vector<Line> lines_;
 public:
-//    changed function name was calculate_centroid
+    Polygon(std::vector<geometry_msgs::Point>);
     void calculateCentroid();
-//    changed function name from inside to insideObject
     bool insideObject(geometry_msgs::Point);
+    geometry_msgs::Point getCentroid();
 };

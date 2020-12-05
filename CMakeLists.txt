@@ -29,9 +29,9 @@ include_directories(
 add_executable(navigator
         src/navigator.cpp
         src/line.cpp
+        src/polygon.cpp
         src/decoder.cpp
         src/manipulator.cpp
-        src/polygon.cpp
         src/map.cpp
         src/order_manager.cpp
         )
@@ -42,11 +42,15 @@ if(CATKIN_ENABLE_TESTING)
     add_rostest_gtest(
             main_test
             test/main_test.launch
+
             test/order_manager_test.cpp
             test/line_test.cpp
             test/main.cpp
+            test/polygon_test.cpp
+
             src/order_manager.cpp
             src/line.cpp
+            src/polygon.cpp
     )
     target_link_libraries(
             main_test
