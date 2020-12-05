@@ -1,0 +1,28 @@
+<?xml version='1.0'?>
+<sdf version='1.4'>
+  <model name="collection_cube">
+    <static>false</static>
+      <link name='collection_cube'>
+        <collision name='collection_cube'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+          </geometry>
+          <max_contacts>10</max_contacts>
+          <surface>
+            <bounce/>
+            <friction>
+              <ode/>
+            </friction>
+            <contact>
+              <ode/>
+            </contact>
+          </surface>
+        </collision>
+        <visual name='collection_cube'>
+          <pose>0 0 0 0 0 0</pose>
+          <geometry>
+          </geometry>
+        </visual>
+  </link>
+  </model>
+</sdf>

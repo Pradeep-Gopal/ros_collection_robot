@@ -1,5 +1,9 @@
 #include<cstdlib>
 #include <ctime>
+#include<fstream>
+#include <gazebo_msgs/SpawnModel.h>
+#include <gazebo_msgs/SpawnModelRequest.h>
+#include <gazebo_msgs/SpawnModelResponse.h>
 #include "ros/ros.h"
 #include "../include/order_manager.h"
 
@@ -34,6 +38,40 @@ void OrderManager::generateOrder(){
 
 void OrderManager::spawnCubes(){
 	ROS_INFO_STREAM("spawn_cubes");
+	std::vector<geometry_msgs::Point> random_locations;
+    geometry_msgs::Point random_point;
+    random_point.x = 1;
+    random_point.y = 2;
+    random_point.z = 0;
+    random_locations.push_back(random_point);
+    ROS_INFO_STREAM(random_point);
+    ros::ServiceClient spawn_object = nh_.serviceClient<gazebo_msgs::SpawnModel>("gazebo/spawn_sdf_model");
+    gazebo_msgs::SpawnModel spawn;
+    spawn.request.model_name="cube_A";
+//    std::ifstream cube_a_xml;
+//    cube_a_xml.open("../models/cube_A/model.sdf");
+    std::ifstream cube_a_xml("../models/cube_A/model.sdf");
+
+    std::string content( (std::istreambuf_iterator<char>(cube_a_xml) ),
+                         (std::istreambuf_iterator<char>()    ) );
+    spawn.request.model_xml = content ;
+
+    geometry_msgs::Pose pose;
+
+    pose.position.x=random_point.x;
+    pose.position.y=random_point.y;
+    pose.position.z=random_point.z;
+    pose.orientation.x=0;
+    pose.orientation.y=0;
+    pose.orientation.z=0;
+    pose.orientation.w=1;
+
+    spawn.request.initial_pose = pose;
+
+    if (!spawn_object.call(spawn)) {
+        ROS_INFO_STREAM("Failed to call service %s");
+    }
+    ROS_INFO_STREAM(spawn.response.status_message);
 }
 
 int OrderManager::getTotalCubes(){
@@ -54,4 +92,5 @@ int main(int argc, char **argv){
     ros::init(argc, argv, "order_manager");
     OrderManager manager;
     manager.generateOrder();
+    manager.spawnCubes();
 }
