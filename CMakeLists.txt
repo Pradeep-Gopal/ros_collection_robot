@@ -27,7 +27,6 @@ include_directories(
 
 add_executable(order_manager 
         src/order_manager.cpp
-        src/main.cpp
         src/decoder.cpp
         src/manipulator.cpp
         src/line.cpp
