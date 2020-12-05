@@ -25,9 +25,12 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/include
 )
 
-add_executable(order_manager src/order_manager.cpp src/main.cpp
-  src/decoder.cpp
-  src/manipulator.cpp)
+add_executable(order_manager 
+        src/order_manager.cpp
+        src/main.cpp
+        src/decoder.cpp
+        src/manipulator.cpp
+        src/line.cpp)
 target_link_libraries(order_manager ${catkin_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)
