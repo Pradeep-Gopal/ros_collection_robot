@@ -30,7 +30,8 @@ add_executable(order_manager
         src/main.cpp
         src/decoder.cpp
         src/manipulator.cpp
-        src/line.cpp)
+        src/line.cpp
+        src/polygon.cpp)
 target_link_libraries(order_manager ${catkin_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)
