@@ -26,7 +26,8 @@ include_directories(
 )
 
 add_executable(order_manager src/order_manager.cpp src/main.cpp
-  src/decoder.cpp)
+  src/decoder.cpp
+  src/manipulator.cpp)
 target_link_libraries(order_manager ${catkin_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)

@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
-// #include <geometry_msgs/PointStamped.h>
+#include "geometry_msgs/PoseStamped.h"
+
 class Manipulator{
 
 private:
