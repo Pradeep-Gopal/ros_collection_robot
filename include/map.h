@@ -1,8 +1,23 @@
-//
-// Created by govind on 12/5/20.
-//
+class OrderManager{
 
-#ifndef ROS_COLLECTION_ROBOT_MAP_H
-#define ROS_COLLECTION_ROBOT_MAP_H
+private:
 
-#endif //ROS_COLLECTION_ROBOT_MAP_H
+    std::vector<char>cubes_;
+    std::vector<char>order_;
+    ros::NodeHandle nh_;
+    ros::Publisher order_pub_;
+    int total_cubes_ = 8;
+    int order_size_ = 4;
+
+public:
+
+    void generateOrder();
+    void spawnCubes();
+
+    // getters
+
+    int getTotalCubes();
+    int getOrderSize();
+    std::vector<char> getOrder();
+    std::vector<char> getCubes();
+};

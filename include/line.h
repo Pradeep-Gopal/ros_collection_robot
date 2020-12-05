@@ -2,17 +2,18 @@
 #include <vector>
 #include "geometry_msgs/PoseStamped.h"
 #include "geometry_msgs/Point.h"
+#include "ros/ros.h"
 
 class Line{
 
 private:
-    geometry_msgs::Point end_;
-    double a_;
-    double b_;
-    double c_;
+    geometry_msgs::Point point_1_;
+    geometry_msgs::Point point_2_;
+    geometry_msgs::Point test_point_;
 public:
-    //edited this in the uml diagram as well, constructor cant have a void return type
-    Line(geometry_msgs::Point a, geometry_msgs::Point b, geometry_msgs::Point c);
-    //changed name from coefficients to getCoefficients, made more sense
-    void getCoefficients();
+    double a;
+    double b;
+    double c;
+    Line(geometry_msgs::Point , geometry_msgs::Point , geometry_msgs::Point );
+    void calculateCoefficients();
 };
