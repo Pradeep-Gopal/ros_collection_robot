@@ -34,6 +34,7 @@ add_executable(navigator
         src/manipulator.cpp
         src/map.cpp
         src/order_manager.cpp
+        src/controller.cpp
         )
 target_link_libraries(navigator ${catkin_LIBRARIES})
 
