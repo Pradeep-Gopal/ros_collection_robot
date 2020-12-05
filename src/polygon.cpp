@@ -1,4 +1,3 @@
-#include "ros/ros.h"
 #include "../include/polygon.h"
 #include "../include/line.h"
 
