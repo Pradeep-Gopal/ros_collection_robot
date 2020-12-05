@@ -1,6 +1,6 @@
 #pragma once
 #include <sensor_msgs/Image.h>
-
+#include "ros/ros.h"
 class Decoder{
 
 private:

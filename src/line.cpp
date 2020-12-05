@@ -10,12 +10,12 @@ Line::Line(geometry_msgs::Point point_1, geometry_msgs::Point point_2, geometry_
 void Line::calculateCoefficients(){
     a = point_1_.y - point_2_.y;
     b = point_2_.x - point_1_.x;
-    c = (point_1_.x*point_2_.y) - (point_2_.x - point_1_.y);
+    c = (point_1_.x*point_2_.y) - (point_2_.x *point_1_.y);
 
     if(((a*test_point_.x) + (b*test_point_.y) + c) < 0){
-        a = -1;
-        b = -1;
-        c = -1;
+        a *= -1;
+        b *= -1;
+        c *= -1;
     }
 
 }

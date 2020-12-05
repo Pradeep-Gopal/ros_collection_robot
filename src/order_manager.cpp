@@ -1,10 +1,9 @@
 #include<cstdlib>
-#include <ctime>
+#include<ctime>
 #include<fstream>
 #include <gazebo_msgs/SpawnModel.h>
 #include <gazebo_msgs/SpawnModelRequest.h>
 #include <gazebo_msgs/SpawnModelResponse.h>
-#include "ros/ros.h"
 #include "../include/order_manager.h"
 
 void OrderManager::generateOrder(){
@@ -86,11 +85,4 @@ std::vector<char> OrderManager::getOrder(){
 }
 std::vector<char> OrderManager::getCubes(){
 	return cubes_;
-}
-
-int main(int argc, char **argv){
-    ros::init(argc, argv, "order_manager");
-    OrderManager manager;
-    manager.generateOrder();
-    manager.spawnCubes();
 }

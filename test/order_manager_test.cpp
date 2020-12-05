@@ -1,5 +1,4 @@
 #include <gtest/gtest.h>
-#include "ros/ros.h"
 #include "../include/order_manager.h"
 
 TEST(order_size_test,checkOrderSize) {

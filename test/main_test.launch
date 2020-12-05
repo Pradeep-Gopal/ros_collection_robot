@@ -1,0 +1,4 @@
+<launch>
+    <node pkg="ros_collection_robot" name="navigator" type="navigator"/>
+    <test pkg="ros_collection_robot" test-name="main_test" type="main_test"/>
+</launch>

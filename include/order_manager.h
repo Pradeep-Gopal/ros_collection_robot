@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "ros/ros.h"
 #include "geometry_msgs/Point.h"
 
 class OrderManager{

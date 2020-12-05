@@ -1,4 +1,3 @@
-#include "ros/ros.h"
 #include "../include/decoder.h"
 
 void Decoder::cameraCallbacks(const sensor_msgs::ImageConstPtr& msg){

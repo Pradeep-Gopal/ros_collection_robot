@@ -1,4 +1,0 @@
-<launch>
-    <node pkg="ros_collection_robot" name="order_manager" type="order_manager"/>
-    <test pkg="ros_collection_robot" test-name="order_manager_test" type="order_manager_test"/>
-</launch>

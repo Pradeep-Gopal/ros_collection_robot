@@ -25,30 +25,35 @@ include_directories(
   ${CMAKE_SOURCE_DIR}/include
 )
 
-add_executable(order_manager 
-        src/order_manager.cpp
+
+add_executable(navigator
+        src/navigator.cpp
+        src/line.cpp
         src/decoder.cpp
         src/manipulator.cpp
-        src/line.cpp
         src/polygon.cpp
-        src/map.cpp)
-target_link_libraries(order_manager ${catkin_LIBRARIES})
+        src/map.cpp
+        src/order_manager.cpp
+        )
+target_link_libraries(navigator ${catkin_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)
     find_package(rostest REQUIRED)
     add_rostest_gtest(
-            order_manager_test
-            test/order_manager_test.launch
+            main_test
+            test/main_test.launch
             test/order_manager_test.cpp
+            test/line_test.cpp
             test/main.cpp
             src/order_manager.cpp
+            src/line.cpp
     )
     target_link_libraries(
-            order_manager_test
+            main_test
             ${catkin_LIBRARIES}
     )
     add_dependencies(
-            order_manager_test
+            main_test
             ${catkin_EXPORTED_TARGETS}
     )
 endif()
