@@ -1,0 +1,100 @@
+---
+wall_1:
+  type: rectangle
+  start: [0.25,0]
+  width: 14.5
+  height: 0.25
+  theta: 0
+
+wall_2:
+  type: rectangle
+  start: [6,0.25]
+  width: 0.25
+  height: 5.5
+  theta: 0
+
+wall_3:
+  type: rectangle
+  start: [4.5,5.75]
+  width: 5.25
+  height: 0.25
+  theta: 0
+
+wall_4:
+  type: rectangle
+  start: [14.75,0]
+  width: 0.25
+  height: 11
+  theta: 0
+
+wall_5:
+  type: polygon
+  vertices:
+    - [14.75,11]
+    - [15,11]
+    - [15,11.1]
+    - [11.1,15]
+    - [11,15]
+    - [11,14.75]
+
+wall_6:
+  type: rectangle
+  start: [0.25,14.75]
+  width: 10.75
+  height: 0.25
+  theta: 0
+
+wall_7:
+  type: rectangle
+  start: [6.75,10.5]
+  width: 0.25
+  height: 4.25
+  theta: 0
+
+wall_8:
+  type: rectangle
+  start: [0,0]
+  width: 0.25
+  height: 15
+  theta: 0
+
+wall_9:
+  type: rectangle
+  start: [0.25,5.75]
+  width: 2.25
+  height: 0.25
+  theta: 0
+
+obstacle_1:
+  type: circle
+  center: [3,2.5]
+  radius: 0.4
+
+obstacle_2:
+  type: rectangle
+  start: [2.5,9.5]
+  width: 1.5
+  height: 3
+  theta: 0
+
+obstacle_3:
+  type: rectangle
+  start: [8.63,11.25]
+  width: 3
+  height: 1
+  theta: -30
+
+obstacle_4:
+  type: rectangle
+  start: [11.75,6]
+  width: 1
+  height: 1
+  theta: 0
+
+obstacle_5:
+  type: polygon
+  vertices:
+    - [8,2.75]
+    - [10.5,2.75]
+    - [10,3.5]
+    - [8.5,3.5]

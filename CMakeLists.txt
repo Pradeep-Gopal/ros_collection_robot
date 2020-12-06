@@ -38,6 +38,7 @@ add_executable(navigator
         src/path_planner.cpp
         )
 target_link_libraries(navigator ${catkin_LIBRARIES})
+target_link_libraries(navigator yaml-cpp)
 
 if(CATKIN_ENABLE_TESTING)
     find_package(rostest REQUIRED)
