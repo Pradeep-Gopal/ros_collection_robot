@@ -18,6 +18,9 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
 )
 
+find_package(OpenCV REQUIRED)
+message("OpenCV version: ${OpenCV_VERSION}")
+
 catkin_package()
 
 include_directories(

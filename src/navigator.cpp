@@ -30,5 +30,6 @@ void Navigator::returnToEulerPath(){
 int main(int argc, char **argv){
     ros::init(argc, argv, "navigator");
     OrderManager order_manager;
+    order_manager.generateOrder();
     order_manager.spawnCubes();
 }

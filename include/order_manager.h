@@ -1,7 +1,14 @@
 #pragma once
 #include <vector>
+#include<cstdlib>
+#include<ctime>
+#include<fstream>
+#include <gazebo_msgs/SpawnModel.h>
+#include <gazebo_msgs/SpawnModelRequest.h>
+#include <gazebo_msgs/SpawnModelResponse.h>
 #include "ros/ros.h"
 #include "geometry_msgs/Point.h"
+#include "../include/map.h"
 #include <ros/package.h>
 
 class OrderManager{
@@ -14,9 +21,10 @@ private:
 	ros::Publisher order_pub_;
 	int total_cubes_ = 8;
 	int order_size_ = 4;
-
+	double clearance_ = 0.2;
+    Map map_object_;
 public:
-	
+
 	void generateOrder();
 	void spawnCubes();
 

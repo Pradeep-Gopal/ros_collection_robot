@@ -9,12 +9,15 @@
 #include "../lib/clipper.hpp"
 
 class Map{
+
     private:
+
         std::vector<Polygon> obstacles_;
         std::vector<Polygon> offset_obstacles_;
         double clearance_;
+
     public:
-        Map(std::string, double);
+        Map();
         void parseYAML(std::string);
         bool insideObstacle(geometry_msgs::Point);
         Polygon polyFromRect(double, double, double, double, double);

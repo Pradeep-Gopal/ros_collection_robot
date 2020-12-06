@@ -3,27 +3,24 @@
 #include "ros/ros.h"
 #include "../include/map.h"
 
-Map::Map(std::string fname, double clearance){
-    clearance_ = clearance;
+Map::Map(){
+    std::string fname = ros::package::getPath("ros_collection_robot") + "/config/map.yaml";
+    clearance_ = 0.2;
     parseYAML(fname);
 
     for (Polygon poly:obstacles_){
         offset_obstacles_.push_back(offsetPolygon(poly));
     }
 
-//    for (int i = 0; i < obstacles_.size(); ++i){
-//        ROS_INFO_STREAM("Poly " << i);
-//        for (auto pt:obstacles_[i].getVertices()){
-//            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
-//        }
-//        ROS_INFO_STREAM("");
-//        for (auto pt:offset_obstacles_[i].getVertices()){
-//            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
-//        }
-//        ROS_INFO_STREAM("");
-//    }
 }
 
+bool Map::insideObstacle(geometry_msgs::Point check_point){
+    for (Polygon poly:offset_obstacles_){
+        if (poly.insideObject(check_point))
+            return true;
+    }
+    return false;
+}
 
 void Map::parseYAML(std::string fname) {
     YAML::Node map = YAML::LoadFile(fname);
