@@ -2,6 +2,7 @@
 #include <vector>
 #include "ros/ros.h"
 #include "geometry_msgs/Point.h"
+#include <ros/package.h>
 
 class OrderManager{
 

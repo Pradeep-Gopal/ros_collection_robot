@@ -36,8 +36,8 @@ void OrderManager::generateOrder(){
 }
 
 void OrderManager::spawnCubes(){
-	ROS_INFO_STREAM("spawn_cubes");
-	std::vector<geometry_msgs::Point> random_locations;
+    ROS_INFO_STREAM("spawn_cubes");
+    std::vector<geometry_msgs::Point> random_locations;
     geometry_msgs::Point random_point;
     random_point.x = 1;
     random_point.y = 2;
@@ -46,15 +46,19 @@ void OrderManager::spawnCubes(){
     ROS_INFO_STREAM(random_point);
     ros::ServiceClient spawn_object = nh_.serviceClient<gazebo_msgs::SpawnModel>("gazebo/spawn_sdf_model");
     gazebo_msgs::SpawnModel spawn;
-    spawn.request.model_name="cube_A";
-//    std::ifstream cube_a_xml;
-//    cube_a_xml.open("../models/cube_A/model.sdf");
-    std::ifstream cube_a_xml("../models/cube_A/model.sdf");
+    spawn.request.model_name="box";
 
-    std::string content( (std::istreambuf_iterator<char>(cube_a_xml) ),
-                         (std::istreambuf_iterator<char>()    ) );
-    spawn.request.model_xml = content ;
+    std::string path = ros::package::getPath("ros_collection_robot");
+    std::string model_path = path + "/models/cube_A/model.sdf";
+    std::ifstream ifs(model_path);
 
+    std::string xml = "";
+    for(std::string line; std::getline(ifs,line); )
+    {
+        xml += line;
+    }
+
+    spawn.request.model_xml = xml;
     geometry_msgs::Pose pose;
 
     pose.position.x=random_point.x;
