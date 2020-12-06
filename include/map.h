@@ -5,6 +5,7 @@
 #include "ros/ros.h"
 #include <yaml-cpp/yaml.h>
 #include "../include/polygon.h"
+#include "../lib/clipper.hpp"
 
 class Map{
     private:

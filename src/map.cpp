@@ -3,6 +3,28 @@
 #include "ros/ros.h"
 #include "../include/map.h"
 
+Map::Map(std::string fname, double clearance){
+    clearance_ = clearance;
+    parseYAML(fname);
+
+    for (Polygon poly:obstacles_){
+        offset_obstacles_.push_back(offsetPolygon(poly));
+    }
+
+    for (int i = 0; i < obstacles_.size(); ++i){
+        ROS_INFO_STREAM("Poly " << i);
+        for (auto pt:obstacles_[i].getVertices()){
+            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
+        }
+        ROS_INFO_STREAM("");
+        for (auto pt:offset_obstacles_[i].getVertices()){
+            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
+        }
+        ROS_INFO_STREAM("");
+    }
+}
+
+
 void Map::parseYAML(std::string fname) {
     YAML::Node map = YAML::LoadFile(fname);
     for (auto it = map.begin(); it != map.end(); ++it){
@@ -82,4 +104,26 @@ Polygon Map::polyFromCircle(double xc, double yc, double radius){
     return Polygon(vertices);
 }
 
+Polygon Map::offsetPolygon(Polygon poly){
+    int scale_factor = 1000000;
+
+    ClipperLib::Path subj;
+    ClipperLib::Paths solution;
+    ClipperLib::ClipperOffset co;
+    std::vector<geometry_msgs::Point> vertices = poly.getVertices();
+    for (geometry_msgs::Point pt:vertices){
+        subj << ClipperLib::IntPoint(pt.x*scale_factor,pt.y*scale_factor);
+    }
+    co.AddPath(subj,ClipperLib::jtMiter,ClipperLib::etClosedPolygon);
+    co.Execute(solution,clearance_*scale_factor);
+
+    std::vector<geometry_msgs::Point> offset_vertices;
+    geometry_msgs::Point offset_point;
+    for (ClipperLib::IntPoint int_point:solution[0]){
+        offset_point.x = (double)int_point.X/scale_factor;
+        offset_point.y = (double)int_point.Y/scale_factor;
+        offset_vertices.push_back(offset_point);
+    }
+    return Polygon(offset_vertices);
+}
 

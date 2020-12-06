@@ -36,6 +36,7 @@ add_executable(navigator
         src/order_manager.cpp
         src/controller.cpp
         src/path_planner.cpp
+        lib/clipper.cpp
         )
 target_link_libraries(navigator ${catkin_LIBRARIES})
 target_link_libraries(navigator yaml-cpp)
