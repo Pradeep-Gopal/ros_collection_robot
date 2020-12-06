@@ -4,6 +4,7 @@
 #include "geometry_msgs/Point.h"
 #include "ros/ros.h"
 #include <yaml-cpp/yaml.h>
+#include <ros/package.h>
 #include "../include/polygon.h"
 #include "../lib/clipper.hpp"
 

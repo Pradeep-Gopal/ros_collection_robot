@@ -11,17 +11,17 @@ Map::Map(std::string fname, double clearance){
         offset_obstacles_.push_back(offsetPolygon(poly));
     }
 
-    for (int i = 0; i < obstacles_.size(); ++i){
-        ROS_INFO_STREAM("Poly " << i);
-        for (auto pt:obstacles_[i].getVertices()){
-            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
-        }
-        ROS_INFO_STREAM("");
-        for (auto pt:offset_obstacles_[i].getVertices()){
-            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
-        }
-        ROS_INFO_STREAM("");
-    }
+//    for (int i = 0; i < obstacles_.size(); ++i){
+//        ROS_INFO_STREAM("Poly " << i);
+//        for (auto pt:obstacles_[i].getVertices()){
+//            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
+//        }
+//        ROS_INFO_STREAM("");
+//        for (auto pt:offset_obstacles_[i].getVertices()){
+//            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
+//        }
+//        ROS_INFO_STREAM("");
+//    }
 }
 
 

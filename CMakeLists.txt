@@ -38,6 +38,7 @@ add_executable(navigator
         src/path_planner.cpp
         lib/clipper.cpp
         )
+
 target_link_libraries(navigator ${catkin_LIBRARIES})
 target_link_libraries(navigator yaml-cpp)
 
@@ -51,15 +52,21 @@ if(CATKIN_ENABLE_TESTING)
             test/line_test.cpp
             test/main.cpp
             test/polygon_test.cpp
+            test/map_test.cpp
 
             src/order_manager.cpp
             src/line.cpp
             src/polygon.cpp
+            src/map.cpp
+
+            lib/clipper.cpp
     )
     target_link_libraries(
             main_test
             ${catkin_LIBRARIES}
     )
+    target_link_libraries(main_test
+            yaml-cpp)
     add_dependencies(
             main_test
             ${catkin_EXPORTED_TARGETS}
