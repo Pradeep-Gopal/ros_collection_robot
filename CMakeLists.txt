@@ -35,6 +35,7 @@ add_executable(navigator
         src/map.cpp
         src/order_manager.cpp
         src/controller.cpp
+        src/path_planner.cpp
         )
 target_link_libraries(navigator ${catkin_LIBRARIES})
 
