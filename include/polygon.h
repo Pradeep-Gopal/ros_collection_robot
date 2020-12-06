@@ -12,6 +12,7 @@ private:
     geometry_msgs::Point centroid_;
     std::vector<Line> lines_;
 public:
+    std::vector<geometry_msgs::Point> getVertices();
     Polygon(std::vector<geometry_msgs::Point>);
     void calculateCentroid();
     bool insideObject(geometry_msgs::Point);

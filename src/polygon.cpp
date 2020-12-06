@@ -14,6 +14,11 @@ Polygon::Polygon(std::vector<geometry_msgs::Point> vertices){
         lines_.push_back(Line(vertices_[i],vertices_[j],centroid_));
     }
 }
+
+std::vector<geometry_msgs::Point> Polygon::getVertices(){
+    return vertices_;
+}
+
 void Polygon::calculateCentroid(){
     double centroidX = 0, centroidY = 0;
     double det = 0, tempDet = 0;
