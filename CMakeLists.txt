@@ -39,6 +39,8 @@ add_executable(navigator
         src/order_manager.cpp
         src/controller.cpp
         src/path_planner.cpp
+        src/node.cpp
+
         lib/clipper.cpp
         )
 

@@ -2,6 +2,7 @@
 #include "../include/polygon.h"
 #include "../include/navigator.h"
 #include "../include/order_manager.h"
+#include "../include/node.h"
 
 void Navigator::lidarCallback(sensor_msgs :: LaserScan &msg){
 
