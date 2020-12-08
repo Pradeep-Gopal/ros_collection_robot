@@ -7,8 +7,13 @@
 ## Authors
 Sprint 1:
 - Driver : Pradeep Gopal
-- Navigator : Govind Ajithkumar
+- Navigator : Govind Ajith Kumar
 - Design Keeper : Justin Albrecht
+
+Sprint 2:
+- Driver : Govind Ajith Kumar
+- Navigator : Justin Albrecht
+- Design Keeper : Pradeep Gopal
 
 ## Overview
 Our proposed idea for ACME robotics is to build a simulation of an autonomous collection robot in a warehouse setting. 
@@ -88,4 +93,29 @@ catkin_make
 source devel/setup.bash
 
 roslaunch ros_collection_robot warehouse_world.launch
+
+```
+
+Now we can run our node and generate the path from a point to another point through the A* Algorithm.
+
+To do this, open a new tab and run the node
+
+```
+cd catkin_ws
+
+source devel/setup.bash
+
+rosrun ros_collection_robot navigator
+
+```
+
+Multiple test cases have been written for this second sprint, this can be checked by,
+opening a new tab and typing the following:
+
+```
+cd catkin_ws
+
+source devel/setup.bash
+
+catkin_make run_tests
 ```
