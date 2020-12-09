@@ -35,13 +35,14 @@ int main(int argc, char **argv){
 //    order_manager.spawnCubes();
 
     PathPlanner planner;
+
     geometry_msgs::Point start;
     start.x = 1;
     start.y = 1;
 
     geometry_msgs::Point end;
-    end.x = 10;
-    end.y = 10;
+    end.x = 5;
+    end.y = 4.5;
 
     if (planner.map_.insideObstacle(end)){
         ROS_WARN_STREAM("Invalid goal position");

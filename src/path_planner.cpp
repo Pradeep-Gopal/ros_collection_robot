@@ -2,16 +2,18 @@
 
 PathPlanner::PathPlanner(){
     grid_size = 0.1;
+    height = 15;
+    width = 15;
 }
 
 std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start, geometry_msgs::Point end) {
     Node start_node;
     start_node.position = start;
-    start_node.generate_id();
+    start_node.id = generate_node_id(start);
 
     Node end_node;
     end_node.position = end;
-    end_node.generate_id();
+    end_node.id = generate_node_id(end);
 
     std::priority_queue<Node, std::vector<Node>, CompareNodeCosts> pq;
     pq.push(start_node);
@@ -51,7 +53,6 @@ std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start,
         }
     }
 
-    // back-track
     std::vector<geometry_msgs::Point> path;
 
     if (!reached_goal)
@@ -61,13 +62,7 @@ std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start,
 
         while(true) {
             path.push_back(parent_node.position);
-
-            std::stringstream ss;
-            ss << std::fixed << std::setprecision(2) << parent_node.parent.x
-               << parent_node.parent.y;
-            std::string new_parent_id = ss.str();
-            new_parent_id.erase(std::remove(new_parent_id.begin(), new_parent_id.end(), '.'), new_parent_id.end());
-
+            std::string new_parent_id = generate_node_id(parent_node.parent);
             parent_node = visited[new_parent_id];
 
             if (parent_node == start_node)
@@ -111,9 +106,19 @@ std::vector<Node> PathPlanner::checkNeighbors(Node & curr_node, Node & end_node)
             child.h = sqrt(pow(new_position.x-end_node.position.x,2) +
                            pow(new_position.y-end_node.position.y,2));
             child.f = child.g + child.h;
-            child.generate_id();
+            child.id = generate_node_id(new_position);
             neighbors.push_back(child);
         }
     }
     return neighbors;
+}
+
+std::string PathPlanner::generate_node_id(geometry_msgs::Point position) {
+    int precision = 1;
+    std::stringstream ss;
+    ss << std::fixed << std::setprecision(precision) << position.x << position.y;
+    std::string id = ss.str();
+    id.erase(std::remove(id.begin(), id.end(), '.'), id.end());
+
+    return id;
 }

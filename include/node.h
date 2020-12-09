@@ -19,7 +19,7 @@ public:
     double f;// total cost (g+h)
     std::string id;
 
-    void generate_id();
+//    void generate_id();
     bool operator==(const Node&); //operator overloading ==
 };
 

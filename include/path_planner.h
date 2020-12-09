@@ -12,10 +12,13 @@ class PathPlanner{
 
 private:
     double grid_size;
+    int height;
+    int width;
 
 public:
     Map map_;
     PathPlanner();
     std::vector<Node> checkNeighbors(Node&, Node&);
+    std::string generate_node_id(geometry_msgs::Point);
     std::vector<geometry_msgs::Point> AStar(geometry_msgs::Point, geometry_msgs::Point);
 };
