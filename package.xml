@@ -21,6 +21,9 @@
   <build_depend>std_msgs</build_depend>
   <build_depend>tf</build_depend>
   <build_depend>rostest</build_depend>
+  <build_depend>cv_bridge</build_depend>
+  <build_depend>image_transport</build_depend>
+
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>moveit_core</build_export_depend>
   <build_export_depend>moveit_ros_perception</build_export_depend>
@@ -33,6 +36,9 @@
   <build_export_depend>std_msgs</build_export_depend>
   <build_export_depend>tf</build_export_depend>
   <build_export_depend>rostest</build_export_depend>
+  <build_export_depend>cv_bridge</build_export_depend>
+  <build_export_depend>image_transport</build_export_depend>
+
   <build_depend>gazebo_ros</build_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>moveit_core</exec_depend>
@@ -47,6 +53,9 @@
   <exec_depend>tf</exec_depend>
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>rostest</exec_depend>
+  <exec_depend>cv_bridge</exec_depend>
+  <exec_depend>image_transport</exec_depend>
+
   <export>
     <!-- Other tools can request additional information be placed here -->
       <gazebo_ros gazebo_model_path="${prefix}/models" gazebo_media_path="${prefix}"/>

@@ -16,15 +16,22 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   tf
   gazebo_ros
+  cv_bridge
 )
 
-find_package(OpenCV REQUIRED)
-message("OpenCV version: ${OpenCV_VERSION}")
+#find_package(OpenCV REQUIRED)
+find_package(OpenCV 3.2.0 REQUIRED
+        CONFIG
+        PATHS /usr/local /usr
+        NO_DEFAULT_PATH
+        )
+#message("OpenCV version: ${OpenCV_VERSION}")
 
 catkin_package()
 
 include_directories(
   ${catkin_INCLUDE_DIRS}
+  ${OpenCV_INCLUDE_DIRS}
   ${CMAKE_SOURCE_DIR}/include
 )
 
@@ -46,6 +53,7 @@ add_executable(navigator
 
 target_link_libraries(navigator ${catkin_LIBRARIES})
 target_link_libraries(navigator yaml-cpp)
+target_link_libraries(navigator ${OpenCV_LIBRARIES})
 
 if(CATKIN_ENABLE_TESTING)
     find_package(rostest REQUIRED)
