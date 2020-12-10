@@ -14,6 +14,7 @@ private:
     image_transport::Subscriber camera_sub_;
     image_transport::Publisher image_pub_;
     cv::Mat frame_;
+    std::vector<int> marker_ids_;
 
 public:
     Decoder(ros::NodeHandle&);

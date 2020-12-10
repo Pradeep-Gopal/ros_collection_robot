@@ -37,6 +37,16 @@ void OrderManager::spawnCubes() {
     ros::ServiceClient spawn_client = nh_.serviceClient<gazebo_msgs::SpawnModel>("gazebo/spawn_sdf_model");
     gazebo_msgs::SpawnModel spawn;
 
+    gazebo_msgs::SpawnModel pedestal;
+
+    std::string model_path = model_dir + "/pedestal/model.sdf";
+    std::ifstream ifs(model_path);
+    std::string xml = "";
+    for (std::string line; std::getline(ifs, line);)
+        xml += line;
+    pedestal.request.model_xml = xml;
+
+
     double min_dist = 2;
     std::vector<geometry_msgs::Point> locations;
     int count = 0;
@@ -64,6 +74,7 @@ void OrderManager::spawnCubes() {
         name.push_back(c);
         name += std::to_string(count);
         spawn.request.model_name = name;
+        pedestal.request.model_name = "pedestal" + name;
 
         std::string model_path = model_dir + "/cube_" + c + "/model.sdf";
         std::ifstream ifs(model_path);
@@ -75,11 +86,16 @@ void OrderManager::spawnCubes() {
         geometry_msgs::Pose pose;
         pose.position.x = pt.x;
         pose.position.y = pt.y;
-        pose.position.z = pt.z;
+        pose.position.z = 0;
 
+        pedestal.request.initial_pose = pose;
+
+        pose.position.z = 0.081;
         spawn.request.initial_pose = pose;
-        ROS_INFO_STREAM(name << " (" << pt.x << ", " << pt.y << ")");
 
+        ROS_INFO_STREAM(name << " (" << pt.x << ", " << pt.y << ")");
+        spawn_client.call(pedestal);
+        ros::Duration(0.5).sleep();
         spawn_client.call(spawn);
         count++;
     }

@@ -32,12 +32,21 @@ void Navigator::returnToEulerPath(){
 int main(int argc, char **argv){
     ros::init(argc, argv, "navigator");
     ros::NodeHandle nh;
-//    OrderManager order_manager;
-//    order_manager.generateOrder();
-//    order_manager.spawnCubes();
+    OrderManager order_manager;
+    order_manager.generateOrder();
+    order_manager.spawnCubes();
 
     Decoder decoder(nh);
-    ros::spin();
+    ros::Rate r(1);
+
+    while(ros::ok()){
+        std::vector<int> ids = decoder.detectTags();
+//        if (ids.size() == 1) {
+//            ROS_INFO_STREAM("Marker id: " << ids[0]);
+//        }
+        ros::spin();
+        r.sleep();
+    }
 
 //    PathPlanner planner;
 //

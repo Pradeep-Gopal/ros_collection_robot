@@ -23,12 +23,25 @@ void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg){
         return;
     }
     // Draw an example circle on the video stream
-    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
-        cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+//    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
+//        cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
+
+    marker_ids_.clear();
+    std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
+    cv::Ptr<cv::aruco::DetectorParameters> parameters = cv::aruco::DetectorParameters::create();
+    cv::Ptr<cv::aruco::Dictionary> dictionary = cv::aruco::getPredefinedDictionary(cv::aruco::DICT_4X4_50);
+
+    cv::aruco::detectMarkers(cv_ptr->image, dictionary, markerCorners, marker_ids_, parameters, rejectedCandidates);
+    cv::aruco::drawDetectedMarkers(cv_ptr->image, markerCorners, marker_ids_);
 
     image_pub_.publish(cv_ptr->toImageMsg());
+
+    for (auto id:marker_ids_){
+        ROS_INFO_STREAM("ID: " << id);
+    }
+
 }
 
 std::vector<int> Decoder::detectTags() {
-
+    return marker_ids_;
 }
