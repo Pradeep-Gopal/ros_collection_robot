@@ -37,6 +37,7 @@ public:
     void odomCallback(const nav_msgs::Odometry::ConstPtr&);
     void facePoint(geometry_msgs::Point);
     void driveToPoint(geometry_msgs::Point);
+    void stop();
     void checkCollectionObject(std::vector<double>);
     void followEulerPath();
     void goToCollectionObject();

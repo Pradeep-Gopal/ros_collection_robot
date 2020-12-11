@@ -59,46 +59,52 @@ void Navigator::facePoint(geometry_msgs::Point goal_pt) {
 
     // rotate until heading is correct
     geometry_msgs::Twist vel;
-    vel.angular.z = .25*direction;
-    vel_pub_.publish(vel);
-    ROS_INFO_STREAM("Turning to face goal.");
+    vel.angular.z = 0.25*direction;
 
     ros::Rate r(30);
     while(ros::ok()){
         ros::spinOnce();
         diff = goal_heading - robot_rotation_;
         if (abs(diff)<0.05) {
-            ROS_INFO_STREAM("Finished Turning.");
             break;
         }
+
+        vel_pub_.publish(vel);
         r.sleep();
     }
 
-    // stop
-    vel.angular.z = 0;
-    vel.linear.x = 0;
-    vel_pub_.publish(vel);
+    stop();
 }
 
 void Navigator::driveToPoint(geometry_msgs::Point goal) {
-    facePoint(goal);
-
     double pi = 3.14159;
+    double heading = atan2(goal.y - robot_location_.y,
+                           goal.x - robot_location_.x);
+    if (heading < 0)
+        heading += 2 * pi;
 
-    ros::Duration(0.5).sleep();
+    double diff = heading - robot_rotation_;
+
+    if (abs(diff) > pi)
+        diff = 2*pi - abs(diff);
+
+    if (abs(diff) > 0.5){
+        stop();
+        ros::Duration(0.5).sleep();
+        facePoint(goal);
+    }
 
     geometry_msgs::Twist vel;
-    vel.linear.x = .2;
+    vel.linear.x = 0.2;
     vel_pub_.publish(vel);
-    ROS_INFO_STREAM("Driving to Goal.");
 
     ros::Rate r(30);
-    double distance;
-    double kp = .4;
+    double kp = 0.2;
+    double max_speed = 0.3;
 
     while(ros::ok()){
         ros::spinOnce();
-        distance = sqrt(pow(goal.x-robot_location_.x,2)+
+        double distance = sqrt(pow(goal.x-robot_location_.x,2)+
                     pow(goal.y-robot_location_.y,2));
 
         double heading = atan2(goal.y - robot_location_.y,
@@ -108,25 +114,32 @@ void Navigator::driveToPoint(geometry_msgs::Point goal) {
 
         double diff = heading - robot_rotation_;
 
-        if (diff > 0)
-            vel.angular.z = -diff*kp;
-        else
-            vel.angular.z = diff*kp;
+        int direction = 1; //-1 for cw 1 for ccw
+        if (diff < 0)
+            direction = -1;
 
-        if (abs(diff) > 0.5) {
-            ROS_WARN_STREAM("Robot veered too far off course");
-            break;
+        if (abs(diff) > pi){
+            direction *= -1;
+            diff = 2*pi - abs(diff);
         }
+
+        double speed = abs(diff)*kp;
+        if (speed > max_speed)
+            speed = max_speed;
+
+        vel.angular.z = direction*speed;
 
         vel_pub_.publish(vel);
 
-        if (distance<0.05) {
-            ROS_INFO_STREAM("Reached goal");
+        if (distance<0.1) {
             break;
         }
         r.sleep();
     }
+}
 
+void Navigator::stop(){
+    geometry_msgs::Twist vel;
     vel.linear.x = 0;
     vel.angular.z = 0;
     vel_pub_.publish(vel);
@@ -152,11 +165,6 @@ int main(int argc, char **argv){
     ros::init(argc, argv, "navigator");
     Navigator nav;
 
-    geometry_msgs::Point goal;
-    goal.x = 1;
-    goal.y = 1;
-
-    nav.driveToPoint(goal);
 //    OrderManager order_manager;
 //    order_manager.generateOrder();
 //    order_manager.spawnCubes();
@@ -169,26 +177,28 @@ int main(int argc, char **argv){
 //        ros::spin();
 //    }
 
-//    PathPlanner planner;
-//
-//    geometry_msgs::Point start;
-//    start.x = 1;
-//    start.y = 1;
-//
-//    geometry_msgs::Point end;
-//    end.x = 5;
-//    end.y = 4.5;
-//
-//    if (planner.map_.insideObstacle(end)){
-//        ROS_WARN_STREAM("Invalid goal position");
-//    } else {
-//        std::vector <geometry_msgs::Point> path;
-//        path = planner.AStar(start, end);
-//
-//        ROS_INFO_STREAM("Length of path: " << path.size());
-//
-//        for (geometry_msgs::Point pt:path) {
-//            ROS_INFO_STREAM("(" << pt.x << "," << pt.y << ")");
-//        }
-//    }
+    PathPlanner planner;
+
+    geometry_msgs::Point start;
+    start.x = 2;
+    start.y = 2;
+
+    geometry_msgs::Point end;
+    end.x = 10;
+    end.y = 2;
+
+    if (planner.map_.insideObstacle(end)){
+        ROS_WARN_STREAM("Invalid goal position");
+    } else {
+        std::vector <geometry_msgs::Point> path;
+        path = planner.AStar(start, end);
+
+        ROS_INFO_STREAM("Length of path: " << path.size());
+
+        for (geometry_msgs::Point pt:path) {
+            ROS_INFO_STREAM("Driving to (" << pt.x << "," << pt.y << ")");
+            nav.driveToPoint(pt);
+        }
+        nav.stop();
+    }
 }

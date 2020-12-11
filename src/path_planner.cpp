@@ -1,7 +1,7 @@
 #include "../include/path_planner.h"
 
 PathPlanner::PathPlanner(){
-    grid_size = 0.1;
+    grid_size = 0.5;
     height = 15;
     width = 15;
 }
@@ -42,7 +42,6 @@ std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start,
             if (visited.find(neighbor.id) == visited.end()) {
                 pq.push(neighbor);
             } else {
-
                 if (neighbor.g < visited[neighbor.id].g) {
                     visited[neighbor.id].g = neighbor.g;
                     visited[neighbor.id].f = visited[neighbor.id].g + visited[neighbor.id].h;
