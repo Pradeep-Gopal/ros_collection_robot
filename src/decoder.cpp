@@ -1,14 +1,25 @@
 #include "../include/decoder.h"
 
 Decoder::Decoder(ros::NodeHandle& nh)
-    : it_(nh)
-    {
-            // Subscrive to input video feed and publish output video feed
-    camera_sub_ = it_.subscribe("/camera/rgb/image_raw", 1,
-                                &Decoder::cameraCallback, this);
-    image_pub_ = it_.advertise("/decoder/output_video", 1);
+    : it_(nh){
+        // Subscribe to input video feed and publish output video feed
+        camera_sub_ = it_.subscribe("/camera/rgb/image_raw", 1,
+                                    &Decoder::cameraCallback, this);
+        camera_info_sub_ = nh.subscribe("/camera/rgb/camera_info",1,
+                                        &Decoder::cameraInfoCallback, this);
+        image_pub_ = it_.advertise("/decoder/output_video", 1);
+        determined_camera_params = false;
     }
 
+void Decoder::cameraInfoCallback(const sensor_msgs::CameraInfoConstPtr& camInfo_msg) {
+    cv::Mat K(3, 3, CV_64FC1, (void *) camInfo_msg->K.data());
+    k_matrix_ = K;
+//    cv::Mat D(1, 5, CV_64FC1, (void *) camInfo_msg->D.data());
+    cv::Mat D = cv::Mat::zeros(1,5, CV_64FC1);
+    d_matrix_ = D;
+    camera_frame_ = camInfo_msg->header.frame_id;
+    determined_camera_params = true;
+}
 
 void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg){
     cv_bridge::CvImagePtr cv_ptr;
@@ -34,14 +45,25 @@ void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg){
     cv::aruco::detectMarkers(cv_ptr->image, dictionary, markerCorners, marker_ids_, parameters, rejectedCandidates);
     cv::aruco::drawDetectedMarkers(cv_ptr->image, markerCorners, marker_ids_);
 
-    image_pub_.publish(cv_ptr->toImageMsg());
+    if (determined_camera_params){
+        std::vector<cv::Vec3d> rvecs, tvecs;
+        cv::aruco::estimatePoseSingleMarkers(markerCorners, 0.04, k_matrix_, d_matrix_, rvecs, tvecs);
 
-    for (auto id:marker_ids_){
-        ROS_INFO_STREAM("ID: " << id);
+        for (int i = 0; i < rvecs.size(); ++i) {
+            auto rvec = rvecs[i];
+            auto tvec = tvecs[i];
+            cv::aruco::drawAxis(cv_ptr->image, k_matrix_, d_matrix_, rvec, tvec, 0.1);
+            std::cout << "tvec:" << tvec << std::endl;
+        }
     }
+
+    image_pub_.publish(cv_ptr->toImageMsg());
+}
+
+geometry_msgs::Pose Decoder::determineCubePose() {
 
 }
 
-std::vector<int> Decoder::detectTags() {
+std::vector<int> Decoder::getMarkerIDs() {
     return marker_ids_;
 }

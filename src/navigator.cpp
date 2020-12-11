@@ -161,15 +161,32 @@ void Navigator::returnToEulerPath(){
 
 }
 
+ros::NodeHandle Navigator::getNodeHandle(){
+    return nh_;
+}
+
 int main(int argc, char **argv){
     ros::init(argc, argv, "navigator");
     Navigator nav;
+    ros::NodeHandle nh = nav.getNodeHandle();
 
 //    OrderManager order_manager;
 //    order_manager.generateOrder();
 //    order_manager.spawnCubes();
 //
-//    Decoder decoder(nh);
+    Decoder decoder(nh);
+
+    ros::Rate r(1);
+    while(ros::ok()){
+//        auto marker_ids = decoder.detectTags();
+//        for (auto id:marker_ids){
+//            ROS_INFO_STREAM("ID: " << id);
+//        }
+
+        ros::spinOnce();
+        r.sleep();
+    }
+
 //    ros::Rate r(1);
 //
 //    while(ros::ok()){
@@ -177,28 +194,28 @@ int main(int argc, char **argv){
 //        ros::spin();
 //    }
 
-    PathPlanner planner;
-
-    geometry_msgs::Point start;
-    start.x = 2;
-    start.y = 2;
-
-    geometry_msgs::Point end;
-    end.x = 10;
-    end.y = 2;
-
-    if (planner.map_.insideObstacle(end)){
-        ROS_WARN_STREAM("Invalid goal position");
-    } else {
-        std::vector <geometry_msgs::Point> path;
-        path = planner.AStar(start, end);
-
-        ROS_INFO_STREAM("Length of path: " << path.size());
-
-        for (geometry_msgs::Point pt:path) {
-            ROS_INFO_STREAM("Driving to (" << pt.x << "," << pt.y << ")");
-            nav.driveToPoint(pt);
-        }
-        nav.stop();
-    }
+//    PathPlanner planner;
+//
+//    geometry_msgs::Point start;
+//    start.x = 2;
+//    start.y = 2;
+//
+//    geometry_msgs::Point end;
+//    end.x = 10;
+//    end.y = 2;
+//
+//    if (planner.map_.insideObstacle(end)){
+//        ROS_WARN_STREAM("Invalid goal position");
+//    } else {
+//        std::vector <geometry_msgs::Point> path;
+//        path = planner.AStar(start, end);
+//
+//        ROS_INFO_STREAM("Length of path: " << path.size());
+//
+//        for (geometry_msgs::Point pt:path) {
+//            ROS_INFO_STREAM("Driving to (" << pt.x << "," << pt.y << ")");
+//            nav.driveToPoint(pt);
+//        }
+//        nav.stop();
+//    }
 }

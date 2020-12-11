@@ -43,4 +43,5 @@ public:
     void goToCollectionObject();
     void driveToDropOff();
     void returnToEulerPath();
+    ros::NodeHandle getNodeHandle();
 };
