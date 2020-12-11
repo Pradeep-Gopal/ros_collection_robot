@@ -170,9 +170,9 @@ int main(int argc, char **argv){
     Navigator nav;
     ros::NodeHandle nh = nav.getNodeHandle();
 
-//    OrderManager order_manager;
-//    order_manager.generateOrder();
-//    order_manager.spawnCubes();
+    OrderManager order_manager;
+    order_manager.generateOrder();
+    order_manager.spawnCubes();
 //
     Decoder decoder(nh);
 
