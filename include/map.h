@@ -9,9 +9,7 @@
 #include "../lib/clipper.hpp"
 
 class Map{
-
     private:
-
         std::vector<Polygon> obstacles_;
         std::vector<Polygon> offset_obstacles_;
         double clearance_;

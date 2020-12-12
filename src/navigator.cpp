@@ -10,6 +10,8 @@ Navigator::Navigator() {
                                 &Navigator::odomCallback, this);
     vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1, true);
     determined_pose = false;
+    std::string fname = ros::package::getPath("ros_collection_robot") + "/config/waypoints.yaml";
+    followWayPoints(fname);
 }
 
 void Navigator::lidarCallback(sensor_msgs::LaserScan &msg){
@@ -145,8 +147,23 @@ void Navigator::stop(){
     vel_pub_.publish(vel);
 }
 
-void Navigator::followEulerPath(){
+void Navigator::followWayPoints(std::string fname) {
+    YAML::Node data = YAML::LoadFile(fname);
+    YAML::Node waypoint_data = data["waypoints"];
+    geometry_msgs::Point point;
+    for (int i = 0; i < waypoint_data.size(); ++i) {
+        point.x = waypoint_data[i][0].as<double>();
+        point.y = waypoint_data[i][1].as<double>();
 
+        waypoints.push_back(point);
+    }
+
+    for (geometry_msgs::Point pt:waypoints) {
+            ROS_INFO_STREAM("Driving to (" << pt.x << "," << pt.y << ")");
+            driveToPoint(pt);
+    }
+
+    stop();
 }
 
 void Navigator::goToCollectionObject(){
@@ -170,22 +187,27 @@ int main(int argc, char **argv){
     Navigator nav;
     ros::NodeHandle nh = nav.getNodeHandle();
 
+    for(auto pt:nav.waypoints){
+        ROS_INFO_STREAM(pt);
+    }
+
+
 //    OrderManager order_manager;
 //    order_manager.generateOrder();
 //    order_manager.spawnCubes();
+
+//    Decoder decoder(nh);
+
+//    ros::Rate r(1);
+//    while(ros::ok()){
+////        auto marker_ids = decoder.detectTags();
+////        for (auto id:marker_ids){
+////            ROS_INFO_STREAM("ID: " << id);
+////        }
 //
-    Decoder decoder(nh);
-
-    ros::Rate r(1);
-    while(ros::ok()){
-//        auto marker_ids = decoder.detectTags();
-//        for (auto id:marker_ids){
-//            ROS_INFO_STREAM("ID: " << id);
-//        }
-
-        ros::spinOnce();
-        r.sleep();
-    }
+//        ros::spinOnce();
+//        r.sleep();
+//    }
 
 //    ros::Rate r(1);
 //

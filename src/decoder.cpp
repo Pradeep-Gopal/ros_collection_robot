@@ -23,19 +23,14 @@ void Decoder::cameraInfoCallback(const sensor_msgs::CameraInfoConstPtr& camInfo_
 
 void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg){
     cv_bridge::CvImagePtr cv_ptr;
-    try
-    {
+    try {
         cv_ptr = cv_bridge::toCvCopy(msg, sensor_msgs::image_encodings::BGR8);
         frame_ = cv_ptr->image;
     }
-    catch (cv_bridge::Exception& e)
-    {
+    catch (cv_bridge::Exception& e) {
         ROS_ERROR("cv_bridge exception: %s", e.what());
         return;
     }
-    // Draw an example circle on the video stream
-//    if (cv_ptr->image.rows > 60 && cv_ptr->image.cols > 60)
-//        cv::circle(cv_ptr->image, cv::Point(50, 50), 10, CV_RGB(255,0,0));
 
     marker_ids_.clear();
     std::vector<std::vector<cv::Point2f>> markerCorners, rejectedCandidates;
@@ -65,7 +60,7 @@ void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg){
                                    rot.at<double>(2, 0), rot.at<double>(2, 1), rot.at<double>(2, 2));
 
             // Create a transform and convert to a Pose
-            tf2::Transform tf2_transform(tf2_rot, tf2::Vector3(tvec[0],tvec[1],tvec[2]));
+            tf2::Transform tf2_transform(tf2_rot, tf2::Vector3(tvec[0],tvec[1],tvec[2]-0.025));
             geometry_msgs::Pose cube_pose;
             tf2::toMsg(tf2_transform, cube_pose);
 

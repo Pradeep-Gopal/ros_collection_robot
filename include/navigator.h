@@ -10,6 +10,8 @@
 #include "sensor_msgs/LaserEcho.h"
 #include "nav_msgs/Odometry.h"
 #include "ros/ros.h"
+#include <ros/package.h>
+#include <yaml-cpp/yaml.h>
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
 #include "../include/path_planner.h"
@@ -32,6 +34,7 @@ private:
     ros::NodeHandle nh_;
 
 public:
+    std::vector<geometry_msgs::Point> waypoints;
     Navigator();
     void lidarCallback(sensor_msgs::LaserScan&);
     void odomCallback(const nav_msgs::Odometry::ConstPtr&);
@@ -39,7 +42,7 @@ public:
     void driveToPoint(geometry_msgs::Point);
     void stop();
     void checkCollectionObject(std::vector<double>);
-    void followEulerPath();
+    void followWayPoints(std::string);
     void goToCollectionObject();
     void driveToDropOff();
     void returnToEulerPath();
