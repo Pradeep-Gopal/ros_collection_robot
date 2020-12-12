@@ -53,32 +53,46 @@ void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg){
             auto rvec = rvecs[i];
             auto tvec = tvecs[i];
 
-//            geometry_msgs::Pose cube_pose;
-
             cv::aruco::drawAxis(cv_ptr->image, k_matrix_, d_matrix_, rvec, tvec, 0.1);
 
-//
-//            cube_pose.position.x = tvec[0];
-//            cube_pose.position.y = tvec[1];
-//            cube_pose.position.z = tvec[2];
-//            cube_pose.orientation.x = q_tf.getX();
-//            cube_pose.orientation.y = q_tf.getY();
-//            cube_pose.orientation.z = q_tf.getZ();
-//            cube_pose.orientation.w = q_tf.getW();
-//
-//            ROS_INFO_STREAM(cube_pose);
+            // Build identity rotation matrix as a cv::Mat
+            cv::Mat rot(3, 3, CV_64FC1);
+            cv::Rodrigues(rvec, rot);
 
-            static tf::TransformBroadcaster br;
-            tf::Transform transform;
-            transform.setOrigin(tf::Vector3(tvec[0],tvec[1],tvec[2]));
+            // Convert to a tf2::Matrix3x3
+            tf2::Matrix3x3 tf2_rot(rot.at<double>(0, 0), rot.at<double>(0, 1), rot.at<double>(0, 2),
+                                   rot.at<double>(1, 0), rot.at<double>(1, 1), rot.at<double>(1, 2),
+                                   rot.at<double>(2, 0), rot.at<double>(2, 1), rot.at<double>(2, 2));
 
-            tf::Quaternion q;
-            q.setRPY(rvec[0], rvec[1], rvec[2]);
-            transform.setRotation(q);
+            // Create a transform and convert to a Pose
+            tf2::Transform tf2_transform(tf2_rot, tf2::Vector3(tvec[0],tvec[1],tvec[2]));
+            geometry_msgs::Pose cube_pose;
+            tf2::toMsg(tf2_transform, cube_pose);
 
-            br.sendTransform(tf::StampedTransform(transform,
-                                                  ros::Time::now(), "world", camera_frame_));
+            tf2_ros::Buffer tfBuffer;
+            tf2_ros::TransformListener tfListener(tfBuffer);
+            geometry_msgs::TransformStamped transformStamped;
+
+            geometry_msgs::PoseStamped world_pose, relative_pose;
+
+            relative_pose.pose = cube_pose;
+
+            ros::Duration timeout(2.0);
+
+            try {
+                transformStamped = tfBuffer.lookupTransform("odom",
+                                                            camera_frame_,
+                                                            ros::Time(0), timeout);
+            } catch (tf2::TransformException &ex) {
+                ROS_WARN("%s", ex.what());
+                continue;
+            }
+
+            tf2::doTransform(relative_pose, world_pose, transformStamped);
+
+            ROS_INFO_STREAM(world_pose);
         }
+
     }
 
     image_pub_.publish(cv_ptr->toImageMsg());
