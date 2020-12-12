@@ -32,11 +32,12 @@ private:
     tf::Transform transform_;
     tf::TransformBroadcaster br_;
     ros::NodeHandle nh_;
+    PathPlanner planner;
 
 public:
     std::vector<geometry_msgs::Point> waypoints;
     Navigator();
-    void lidarCallback(sensor_msgs::LaserScan&);
+    void lidarCallback(const sensor_msgs::LaserScan::ConstPtr&);
     void odomCallback(const nav_msgs::Odometry::ConstPtr&);
     void facePoint(geometry_msgs::Point);
     void driveToPoint(geometry_msgs::Point);

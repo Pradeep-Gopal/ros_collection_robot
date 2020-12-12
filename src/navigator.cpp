@@ -9,12 +9,35 @@ Navigator::Navigator() {
     odom_sub_ = nh_.subscribe("/odom", 10,
                                 &Navigator::odomCallback, this);
     vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1, true);
+    lidar_sub_ = nh_.subscribe("/scan",10,
+                               &Navigator::lidarCallback, this);
     determined_pose = false;
     std::string fname = ros::package::getPath("ros_collection_robot") + "/config/waypoints.yaml";
-    followWayPoints(fname);
+
+//    followWayPoints(fname);
 }
 
-void Navigator::lidarCallback(sensor_msgs::LaserScan &msg){
+void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
+    geometry_msgs::Point point;
+    for (int i = 0; i < msg->ranges.size(); ++i) {
+        if (msg->ranges[i] < msg->range_min || msg->ranges[i] > msg->range_max)
+            continue;
+
+        double theta = (i*3.14)/180;
+        double phi = theta+robot_rotation_;
+        if (phi > 2*3.14)
+            phi -= 2*3.14;
+
+        point.x = msg->ranges[i]*cos(phi)+robot_location_.x-0.024;
+        point.y = msg->ranges[i]*sin(phi)+robot_location_.y;
+
+        if (!planner.map_.insideObstacle(point)){
+            ROS_INFO_STREAM("Cube Detected");
+        }
+    }
+
+
+
 
 }
 
@@ -187,9 +210,11 @@ int main(int argc, char **argv){
     Navigator nav;
     ros::NodeHandle nh = nav.getNodeHandle();
 
-    for(auto pt:nav.waypoints){
-        ROS_INFO_STREAM(pt);
-    }
+    ros::spin();
+
+//    for(auto pt:nav.waypoints){
+//        ROS_INFO_STREAM(pt);
+//    }
 
 
 //    OrderManager order_manager;
