@@ -21,5 +21,6 @@ class Map{
         Polygon polyFromRect(double, double, double, double, double);
         Polygon polyFromCircle(double, double, double);
         Polygon offsetPolygon(Polygon);
+        void addObstacle(Polygon);
 };
 

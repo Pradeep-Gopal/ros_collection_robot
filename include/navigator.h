@@ -1,6 +1,7 @@
 #pragma once
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #include "geometry_msgs/PoseStamped.h"
 #include <geometry_msgs/Twist.h>
 #include "geometry_msgs/Point.h"
@@ -20,10 +21,12 @@ class Navigator{
 
 private:
     bool determined_pose;
+    bool cube_detected_;
+    bool approaching_cube_;
     bool found_object_;
-    PathPlanner path_planner_;
-    std::vector<geometry_msgs::Point>euler_waypoints_;
     int current_waypoint_;
+    PathPlanner path_planner_;
+    geometry_msgs::Point cube_position_;
     ros::Subscriber lidar_sub_;
     ros::Subscriber odom_sub_;
     ros::Publisher vel_pub_;
@@ -39,11 +42,12 @@ public:
     Navigator();
     void lidarCallback(const sensor_msgs::LaserScan::ConstPtr&);
     void odomCallback(const nav_msgs::Odometry::ConstPtr&);
+    void parseWaypoints(std::string);
     void facePoint(geometry_msgs::Point);
-    void driveToPoint(geometry_msgs::Point);
+    int driveToPoint(geometry_msgs::Point);
     void stop();
     void checkCollectionObject(std::vector<double>);
-    void followWayPoints(std::string);
+    void navigate();
     void goToCollectionObject();
     void driveToDropOff();
     void returnToEulerPath();

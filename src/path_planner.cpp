@@ -1,12 +1,25 @@
 #include "../include/path_planner.h"
 
 PathPlanner::PathPlanner(){
-    grid_size = 0.5;
+    grid_size = 0.1;
     height = 15;
     width = 15;
 }
 
 std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start, geometry_msgs::Point end) {
+    std::stringstream ss1, ss2, ss3, ss4;
+    ss1 << std::fixed << std::setprecision(1) << start.x;
+    start.x = std::stod(ss1.str());
+
+    ss2 << std::fixed << std::setprecision(1) << start.y;
+    start.y = std::stod(ss2.str());
+
+    ss3 << std::fixed << std::setprecision(1) << end.x;
+    end.x = std::stod(ss3.str());
+
+    ss4 << std::fixed << std::setprecision(1) << end.y;
+    end.y = std::stod(ss4.str());
+
     Node start_node;
     start_node.position = start;
     start_node.id = generate_node_id(start);
@@ -31,7 +44,6 @@ std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start,
         visited[curr_node.id] = curr_node;
 
         if (curr_node == end_node) { // reached the goal
-            ROS_INFO_STREAM("Found the goal");
             reached_goal = true;
             break;
         }
@@ -97,7 +109,7 @@ std::vector<Node> PathPlanner::checkNeighbors(Node & curr_node, Node & end_node)
         new_position.x = curr_node.position.x + dir.first;
         new_position.y = curr_node.position.y + dir.second;
 
-        if (!map_.insideObstacle(new_position)) {
+        if (!map.insideObstacle(new_position)) {
             Node child;
             child.position = new_position;
             child.parent = curr_node.position;

@@ -16,7 +16,7 @@ private:
     int width;
 
 public:
-    Map map_;
+    Map map;
     PathPlanner();
     std::vector<Node> checkNeighbors(Node&, Node&);
     std::string generate_node_id(geometry_msgs::Point);

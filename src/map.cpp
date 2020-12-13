@@ -111,6 +111,7 @@ Polygon Map::offsetPolygon(Polygon poly){
     for (geometry_msgs::Point pt:vertices){
         subj << ClipperLib::IntPoint(pt.x*scale_factor,pt.y*scale_factor);
     }
+
     co.AddPath(subj,ClipperLib::jtMiter,ClipperLib::etClosedPolygon);
     co.Execute(solution,clearance_*scale_factor);
 
@@ -122,5 +123,11 @@ Polygon Map::offsetPolygon(Polygon poly){
         offset_vertices.push_back(offset_point);
     }
     return Polygon(offset_vertices);
+}
+
+void Map::addObstacle(Polygon new_poly) {
+    obstacles_.push_back(new_poly);
+    Polygon offset_new_poly = offsetPolygon(new_poly);
+    offset_obstacles_.push_back(offset_new_poly);
 }
 
