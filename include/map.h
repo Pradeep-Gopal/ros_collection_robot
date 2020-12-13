@@ -15,7 +15,7 @@ class Map{
         double clearance_;
 
     public:
-        Map();
+        Map(double);
         void parseYAML(std::string);
         bool insideObstacle(geometry_msgs::Point);
         Polygon polyFromRect(double, double, double, double, double);

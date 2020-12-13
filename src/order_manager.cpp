@@ -1,36 +1,42 @@
 #include "../include/order_manager.h"
 
-void OrderManager::generateOrder(){
-    ROS_INFO_STREAM("Generating Order ...");
-    std::vector<char>available_cubes = {'A','B','C','D','E','F','G','H'};
-    int random_cube_idx;
-    srand(time(NULL));// to generate a truly random number every time
-    for(int i = 0; i < total_cubes_; i++){
-        random_cube_idx = (rand() % (available_cubes.size()));
-        cubes_.push_back(available_cubes[random_cube_idx]);
-    }
-    for(auto cube:cubes_){
-        ROS_INFO_STREAM("CUBE : "<<cube);
-    }
-    int order_idx;
-    std::vector<int>cubes_selected;
-    while(order_.size()<4){
-        order_idx = (rand() % (cubes_.size()));
-        if (std::count(cubes_selected.begin(), cubes_selected.end(), order_idx)){
+OrderManager::OrderManager()
+    :map_object_(clearance_){}
+
+void OrderManager::generateOrder() {
+        ROS_INFO_STREAM("Generating Order ...");
+        std::vector<char>available_cubes = {'A','B','C','D','E','F','G','H'};
+        int random_cube_idx;
+//        srand(time(NULL));// to generate a truly random number every time
+        srand(5);
+
+        for(int i = 0; i < total_cubes_; i++){
+            random_cube_idx = (rand() % (available_cubes.size()));
+            cubes_.push_back(available_cubes[random_cube_idx]);
         }
-        else{
-            cubes_selected.push_back(order_idx);
-            order_.push_back(cubes_[order_idx]);
+        for(auto cube:cubes_){
+            ROS_INFO_STREAM("CUBE : "<<cube);
         }
-    }
-    for(auto order:order_){
-        ROS_INFO_STREAM("ORDER : "<<order);
-    }
-    ROS_INFO_STREAM("Random Cubes generated ...");
+        int order_idx;
+        std::vector<int>cubes_selected;
+        while(order_.size()<4){
+            order_idx = (rand() % (cubes_.size()));
+            if (std::count(cubes_selected.begin(), cubes_selected.end(), order_idx)){
+            }
+            else{
+                cubes_selected.push_back(order_idx);
+                order_.push_back(cubes_[order_idx]);
+            }
+        }
+        for(auto order:order_){
+            ROS_INFO_STREAM("ORDER : "<<order);
+        }
+        ROS_INFO_STREAM("Random Cubes generated ...");
 }
 
 void OrderManager::spawnCubes() {
-    srand(time(NULL));
+//    srand(time(NULL));
+    srand(5);
 
     std::string model_dir = ros::package::getPath("ros_collection_robot") + "/models";
 
@@ -90,7 +96,7 @@ void OrderManager::spawnCubes() {
 
         pedestal.request.initial_pose = pose;
 
-        pose.position.z = 0.081;
+        pose.position.z = 0.101;
         spawn.request.initial_pose = pose;
 
         ROS_INFO_STREAM(name << " (" << pt.x << ", " << pt.y << ")");

@@ -1,9 +1,10 @@
 #include "../include/path_planner.h"
 
-PathPlanner::PathPlanner(){
-    grid_size = 0.1;
-    height = 15;
-    width = 15;
+PathPlanner::PathPlanner()
+    :map(clearance_){
+        grid_size = 0.1;
+        height = 15;
+        width = 15;
 }
 
 std::vector<geometry_msgs::Point> PathPlanner::AStar(geometry_msgs::Point start, geometry_msgs::Point end) {

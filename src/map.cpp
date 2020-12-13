@@ -3,9 +3,9 @@
 #include "ros/ros.h"
 #include "../include/map.h"
 
-Map::Map(){
+Map::Map(double clearance){
     std::string fname = ros::package::getPath("ros_collection_robot") + "/config/map.yaml";
-    clearance_ = 0.2;
+    clearance_ = clearance;
     parseYAML(fname);
 
     for (Polygon poly:obstacles_){

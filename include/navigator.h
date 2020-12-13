@@ -16,6 +16,11 @@
 #include <tf/transform_broadcaster.h>
 #include <tf/transform_datatypes.h>
 #include "../include/path_planner.h"
+#include "../include/order_manager.h"
+#include "../include/node.h"
+#include "../include/decoder.h"
+#include "../include/line.h"
+#include "../include/polygon.h"
 
 class Navigator{
 
@@ -25,6 +30,7 @@ private:
     bool approaching_cube_;
     bool found_object_;
     int current_waypoint_;
+    double lidar_min_front_;
     PathPlanner path_planner_;
     geometry_msgs::Point cube_position_;
     ros::Subscriber lidar_sub_;
@@ -35,7 +41,9 @@ private:
     tf::Transform transform_;
     tf::TransformBroadcaster br_;
     ros::NodeHandle nh_;
+    std::vector<char> cubes_;
     PathPlanner planner;
+    Decoder decoder;
 
 public:
     std::vector<geometry_msgs::Point> waypoints;
@@ -46,10 +54,9 @@ public:
     void facePoint(geometry_msgs::Point);
     int driveToPoint(geometry_msgs::Point);
     void stop();
+    void reverse(double);
     void checkCollectionObject(std::vector<double>);
-    void navigate();
+    int navigate();
     void goToCollectionObject();
     void driveToDropOff();
-    void returnToEulerPath();
-    ros::NodeHandle getNodeHandle();
 };

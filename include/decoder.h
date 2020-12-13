@@ -19,21 +19,19 @@
 
 class Decoder{
 private:
-    bool determined_camera_params;
     image_transport::ImageTransport it_;
     image_transport::Subscriber camera_sub_;
     ros::Subscriber camera_info_sub_;
     image_transport::Publisher image_pub_;
     cv::Mat frame_;
-    std::vector<int> marker_ids_;
+    bool determined_camera_params;
 
 public:
+    Decoder(ros::NodeHandle&);
     cv::Mat k_matrix_;
     cv::Mat d_matrix_;
     std::string camera_frame_;
-    Decoder(ros::NodeHandle&);
     void cameraCallback(const sensor_msgs::ImageConstPtr&);
     void cameraInfoCallback(const sensor_msgs::CameraInfoConstPtr&);
-    geometry_msgs::Pose determineCubePose();
-    std::vector<int> getMarkerIDs();
+    std::pair<int,geometry_msgs::PoseStamped> decode();
 };
