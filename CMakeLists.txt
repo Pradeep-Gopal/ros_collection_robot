@@ -4,20 +4,20 @@ project(ros_collection_robot)
 add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
-  geometry_msgs
-  moveit_core
-  moveit_ros_perception
-  moveit_ros_planning
-  moveit_ros_planning_interface
-  moveit_visual_tools
-  roscpp
-  rospy
-  sensor_msgs
-  std_msgs
-  tf2
-  gazebo_ros
-  cv_bridge
-)
+        geometry_msgs
+        moveit_core
+        moveit_ros_perception
+        moveit_ros_planning
+        moveit_ros_planning_interface
+        moveit_visual_tools
+        roscpp
+        rospy
+        sensor_msgs
+        std_msgs
+        tf2
+        gazebo_ros
+        cv_bridge
+        )
 
 #find_package(OpenCV REQUIRED)
 find_package(OpenCV 3.2.0 REQUIRED
@@ -30,13 +30,14 @@ find_package(OpenCV 3.2.0 REQUIRED
 catkin_package()
 
 include_directories(
-  ${catkin_INCLUDE_DIRS}
-  ${OpenCV_INCLUDE_DIRS}
-  ${CMAKE_SOURCE_DIR}/include
+        ${catkin_INCLUDE_DIRS}
+        ${OpenCV_INCLUDE_DIRS}
+        ${CMAKE_SOURCE_DIR}/include
 )
 
 
 add_executable(navigator
+        src/main.cpp
         src/navigator.cpp
         src/line.cpp
         src/polygon.cpp
@@ -49,7 +50,7 @@ add_executable(navigator
         src/node.cpp
 
         lib/clipper.cpp
-        )
+        src/main.cpp)
 
 target_link_libraries(navigator ${catkin_LIBRARIES})
 target_link_libraries(navigator yaml-cpp)
@@ -66,21 +67,30 @@ if(CATKIN_ENABLE_TESTING)
             test/main.cpp
             test/polygon_test.cpp
             test/map_test.cpp
+            test/path_planner_test.cpp
+            test/node_test.cpp
+            test/decoder_test.cpp
 
             src/order_manager.cpp
             src/line.cpp
             src/polygon.cpp
             src/map.cpp
+            src/path_planner.cpp
+            src/node.cpp
+            src/decoder.cpp
+            src/navigator.cpp
 
             lib/clipper.cpp
     )
     target_link_libraries(
             main_test
             ${catkin_LIBRARIES}
+            ${OpenCV_LIBRARIES}
     )
     target_link_libraries(main_test
             yaml-cpp)
     add_dependencies(
+            navigator
             main_test
             ${catkin_EXPORTED_TARGETS}
     )
