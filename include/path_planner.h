@@ -12,11 +12,11 @@ class PathPlanner{
 
 private:
     double clearance_ = 0.3;
+
+public:
     double grid_size;
     int height;
     int width;
-
-public:
     Map map;
     PathPlanner();
     std::vector<Node> checkNeighbors(Node&, Node&);

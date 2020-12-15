@@ -338,25 +338,3 @@ void Navigator::goToCollectionObject(){
     cube_detected_ = false;
     approaching_cube_ = false;
 }
-
-int main(int argc, char **argv){
-    ros::init(argc, argv, "navigator");
-
-    OrderManager order_manager;
-    order_manager.generateOrder();
-
-//    order_manager.spawnCubes();
-    Navigator nav;
-
-    for (auto c:nav.order_){
-        ROS_INFO_STREAM(c);
-    }
-
-    ros::spin();
-//    int success = nav.navigate();
-//
-//    if (success)
-//        ROS_INFO_STREAM("The robot finished searching the space");
-//    else
-//        ROS_INFO_STREAM("The robot was unable to search the space");
-}

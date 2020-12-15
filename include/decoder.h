@@ -31,10 +31,10 @@ private:
     cv::Mat k_matrix_;
     cv::Mat d_matrix_;
     std::string camera_frame_;
-    bool determined_camera_params;
     std::vector<Cube> cubes_;
 
 public:
+    bool determined_camera_params;
     Decoder(ros::NodeHandle&);
     void cameraCallback(const sensor_msgs::ImageConstPtr&);
     void cameraInfoCallback(const sensor_msgs::CameraInfoConstPtr&);
