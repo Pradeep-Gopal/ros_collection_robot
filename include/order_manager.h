@@ -22,10 +22,10 @@ private:
 	std::vector<char>order_;
 	ros::NodeHandle nh_;
     ros::Subscriber collection_sub_;
-	int total_cubes_ = 2;
-	int order_size_ = 1;
-	int max_x_ = 400; // x_max to spawn cubes in mm
-	int max_y_ = 400; // y_max to spawn cubes in mm
+	int total_cubes_ = 8;
+	int order_size_ = 4;
+	int max_x_ = 1500; // x_max to spawn cubes in mm
+	int max_y_ = 1500; // y_max to spawn cubes in mm
 	double clearance_ = 1;
     Map map_object_;
     std::vector<std::string> cube_names_;
