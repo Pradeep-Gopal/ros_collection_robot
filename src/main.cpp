@@ -10,9 +10,12 @@
 int main(int argc, char **argv){
     ros::init(argc, argv, "navigator");
 
-    Navigator nav;
+    OrderManager manager;
+    manager.generateOrder();
+    manager.spawnCubes();
 
-    int success = nav.navigate();
+    Navigator nav;
+    bool success = nav.navigate();
 
     if (success)
         ROS_INFO_STREAM("The robot completed the order");

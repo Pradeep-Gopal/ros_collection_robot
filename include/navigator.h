@@ -21,28 +21,30 @@
 #include "../include/decoder.h"
 #include "../include/line.h"
 #include "../include/polygon.h"
+#include <ros_collection_robot/Cube.h>
 
 class Navigator{
 
 private:
     bool found_object_;
+    int object_detector_count;
     double lidar_min_front_;
     PathPlanner path_planner_;
     geometry_msgs::Point cube_position_;
+    ros::NodeHandle nh_;
     ros::Subscriber lidar_sub_;
     ros::Subscriber odom_sub_;
     ros::Publisher vel_pub_;
+    ros::Publisher collector_pub_;
     geometry_msgs::Point robot_location_;
     double robot_rotation_; // rotation about z in radians (0 - 2pi)
     tf::Transform transform_;
     tf::TransformBroadcaster br_;
-    ros::NodeHandle nh_;
     std::vector<char> cubes_;
     PathPlanner planner;
     Decoder decoder;
 
 public:
-    OrderManager order_manager;
     bool determined_pose;
     bool cube_detected_;
     bool approaching_cube_;
@@ -58,7 +60,7 @@ public:
     void stop();
     void reverse(double);
     void checkCollectionObject(std::vector<double>);
-    int navigate();
+    bool navigate();
     void goToCollectionObject();
     void driveToDropOff();
 };

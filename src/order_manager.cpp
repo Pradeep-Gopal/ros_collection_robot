@@ -1,8 +1,31 @@
 #include "../include/order_manager.h"
 
-OrderManager::OrderManager(ros::NodeHandle& nh)
-    :map_object_(clearance_){
-    nh_ = nh;
+OrderManager::OrderManager()
+    :map_object_(clearance_) {
+
+    collection_sub_ = nh_.subscribe("/collect_cube", 10,
+                                    &OrderManager::collectionCallback, this);
+}
+
+
+void OrderManager::collectionCallback(const ros_collection_robot::Cube::ConstPtr& msg) {
+    bool cube_exists = false;
+    int idx;
+    for (int i = 0; i < cube_locations_.size(); i++){
+        double distance = sqrt(pow(msg->x-cube_locations_[i].x,2)+
+                               pow(msg->y-cube_locations_[i].y,2));
+
+        if (distance < 1) {
+            idx = i;
+            cube_exists = true;
+            break;
+        }
+    }
+
+    if (cube_exists && msg->type[0] == cubes_[idx]){
+        deleteCube(cube_names_[idx]);
+    } else
+        ROS_WARN_STREAM("Cube not found.");
 }
 
 void OrderManager::generateOrder() {
@@ -18,7 +41,7 @@ void OrderManager::generateOrder() {
 
         int order_idx;
         std::vector<int>cubes_selected;
-        while(order_.size()<4){
+        while(order_.size()<order_size_){
             order_idx = (rand() % (cubes_.size()));
             if (std::count(cubes_selected.begin(), cubes_selected.end(), order_idx)){
             }
@@ -68,8 +91,8 @@ void OrderManager::spawnCubes() {
     for (char c:cubes_) {
         geometry_msgs::Point pt;
         while (true) {
-            pt.x = (double) (rand() % (1500)) / 100;
-            pt.y = (double) (rand() % (1500)) / 100;
+            pt.x = (double) (rand() % max_x_) / 100;
+            pt.y = (double) (rand() % max_y_) / 100;
             if (!map_object_.insideObstacle(pt)) {
                 bool too_close = false;
                 for (geometry_msgs::Point loc:locations){
@@ -118,28 +141,15 @@ void OrderManager::spawnCubes() {
     }
 }
 
-void OrderManager::deleteCube(geometry_msgs::Point location, char type){
+void OrderManager::deleteCube(std::string name){
     ros::ServiceClient delete_client = nh_.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
     gazebo_msgs::DeleteModel delete_model;
 
-    bool cube_exists = false;
-    int idx;
-    for (int i = 0; i < cube_locations_.size(); i++){
-        double distance = sqrt(pow(location.x-cube_locations_[i].x,2)+
-                               pow(location.y-cube_locations_[i].y,2));
-
-        if (distance < 1) {
-            idx = i;
-            cube_exists = true;
-            break;
-        }
-    }
-
-    if (cube_exists && type == cubes_[idx]){
-        delete_model.request.model_name = cube_names_[idx];
+    if (std::find(delete_cubes_.begin(),delete_cubes_.end(),name) == delete_cubes_.end()){
+        delete_model.request.model_name = name;
         delete_client.call(delete_model);
-    } else
-        ROS_WARN_STREAM("Cube not found.");
+        delete_cubes_.push_back(name);
+    }
 }
 
 int OrderManager::getTotalCubes(){

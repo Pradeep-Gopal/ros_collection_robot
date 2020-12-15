@@ -17,6 +17,7 @@ find_package(catkin REQUIRED COMPONENTS
         tf2
         gazebo_ros
         cv_bridge
+        message_generation
         )
 
 #find_package(OpenCV REQUIRED)
@@ -27,7 +28,19 @@ find_package(OpenCV 3.2.0 REQUIRED
         )
 #message("OpenCV version: ${OpenCV_VERSION}")
 
-catkin_package()
+add_message_files(
+        FILES
+        Cube.msg
+)
+
+generate_messages(
+        DEPENDENCIES
+        std_msgs
+)
+
+catkin_package(
+        CATKIN_DEPENDS message_runtime
+)
 
 include_directories(
         ${catkin_INCLUDE_DIRS}

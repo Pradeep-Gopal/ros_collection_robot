@@ -13,6 +13,7 @@
 #include "geometry_msgs/Point.h"
 #include "../include/map.h"
 #include <ros/package.h>
+#include <ros_collection_robot/Cube.h>
 
 class OrderManager{
 
@@ -20,18 +21,23 @@ private:
 	std::vector<char>cubes_;
 	std::vector<char>order_;
 	ros::NodeHandle nh_;
-	int total_cubes_ = 8;
-	int order_size_ = 4;
+    ros::Subscriber collection_sub_;
+	int total_cubes_ = 2;
+	int order_size_ = 1;
+	int max_x_ = 400; // x_max to spawn cubes in mm
+	int max_y_ = 400; // y_max to spawn cubes in mm
 	double clearance_ = 1;
     Map map_object_;
     std::vector<std::string> cube_names_;
+    std::vector<std::string> delete_cubes_;
     std::vector<geometry_msgs::Point> cube_locations_;
 
 public:
-    OrderManager(ros::NodeHandle&);
+    OrderManager();
+    void collectionCallback(const ros_collection_robot::Cube::ConstPtr&);
 	void generateOrder();
 	void spawnCubes();
-	void deleteCube(geometry_msgs::Point location, char type);
+	void deleteCube(std::string);
 
 	// getters
 	int getTotalCubes();

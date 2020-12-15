@@ -1,36 +1,38 @@
 #include "../include/navigator.h"
 
 Navigator::Navigator()
-    : decoder(nh_), order_manager(nh_){
+    : decoder(nh_){
+        odom_sub_ = nh_.subscribe("/odom", 10,
+                                    &Navigator::odomCallback, this);
 
-    order_manager.generateOrder();
-    order_manager.spawnCubes();
+        lidar_sub_ = nh_.subscribe("/scan",10,
+                                   &Navigator::lidarCallback, this);
 
-    odom_sub_ = nh_.subscribe("/odom", 10,
-                                &Navigator::odomCallback, this);
-    vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1, true);
-    lidar_sub_ = nh_.subscribe("/scan",10,
-                               &Navigator::lidarCallback, this);
+        vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1, true);
+        collector_pub_ = nh_.advertise<ros_collection_robot::Cube>("/collect_cube", 1, true);
 
-    determined_pose = false;
-    cube_detected_ = false;
-    approaching_cube_ = false;
-    current_waypoint_ = 0;
-    std::string fname = ros::package::getPath("ros_collection_robot") + "/config/waypoints.yaml";
-    parseWaypoints(fname);
+        determined_pose = false;
+        cube_detected_ = false;
+        approaching_cube_ = false;
+        current_waypoint_ = 0;
+        object_detector_count = 0;
+        lidar_min_front_ = INFINITY;
+        std::string fname = ros::package::getPath("ros_collection_robot") + "/config/waypoints.yaml";
+        parseWaypoints(fname);
 
-    cubes_ = {'A','B','C','D','E','F','G','H'};
+        cubes_ = {'A','B','C','D','E','F','G','H'};
 
-    std::string order_str;
-    nh_.getParam("order",order_str);
+        std::string order_str;
+        nh_.getParam("order",order_str);
 
-    for (char const &c: order_str){
-        order_.push_back(c);
-    }
+        for (char const &c: order_str){
+            order_.push_back(c);
+        }
 }
 
 void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
     geometry_msgs::Point point;
+
     for (int i = 0; i < msg->ranges.size(); ++i) {
         if (msg->ranges[i] < 0.5 || msg->ranges[i] > 2)
             continue;
@@ -43,7 +45,10 @@ void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
         point.x = msg->ranges[i]*cos(phi)+robot_location_.x-0.024;
         point.y = msg->ranges[i]*sin(phi)+robot_location_.y;
 
-        if (!planner.map.insideObstacle(point)){
+        if (!planner.map.insideObstacle(point))
+            object_detector_count++;
+
+        if (object_detector_count > 5) {
             cube_detected_ = true;
             cube_position_ = point;
             break;
@@ -109,10 +114,10 @@ void Navigator::facePoint(geometry_msgs::Point goal_pt) {
     geometry_msgs::Twist vel;
 
     double angular_speed;
-    if (abs(diff) > 0.5)
-        angular_speed = .3;
+    if (abs(diff) > 1)
+        angular_speed = 0.3;
     else
-        angular_speed = 0.1;
+        angular_speed = 0.2;
 
     vel.angular.z = angular_speed*direction;
 
@@ -149,7 +154,7 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
     }
 
     geometry_msgs::Twist vel;
-    vel.linear.x = 0.2;
+    vel.linear.x = 0.25;
     vel_pub_.publish(vel);
 
     ros::Rate r(30);
@@ -193,7 +198,7 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
 
         vel_pub_.publish(vel);
 
-        if (distance<0.1)
+        if (distance < 0.1)
             return 1;
 
         if (cube_detected_ && !approaching_cube_)
@@ -235,12 +240,12 @@ void Navigator::parseWaypoints(std::string fname) {
     }
 }
 
-int Navigator::navigate() {
+bool Navigator::navigate() {
     while (ros::ok()) {
         if(determined_pose) {
             if (current_waypoint_ == waypoints.size()){
                 stop();
-                return 1;
+                return false;
             }
 
             if (planner.map.insideObstacle(waypoints[current_waypoint_]))
@@ -253,7 +258,7 @@ int Navigator::navigate() {
 
             if (path.size() == 0) { // path planning failed
                 stop();
-                return 0;
+                return false;
             }
 
             bool reached_waypoint = true;
@@ -262,6 +267,8 @@ int Navigator::navigate() {
                 if (cube_detected_) {
                     stop();
                     goToCollectionObject();
+
+                    ROS_INFO_STREAM("Decoding cube");
                     Cube cube = decoder.getCube(robot_location_);
 
                     if (cube.id == -1)
@@ -275,14 +282,26 @@ int Navigator::navigate() {
                             order_.erase(std::find(order_.begin(),order_.end(),type));
                             ROS_INFO_STREAM("The cube is in the order");
                             ROS_INFO_STREAM("Collecting cube..");
-                            order_manager.deleteCube(cube.pose.position,type);
+                            ros_collection_robot::Cube cube_msg;
+                            cube_msg.type = std::string(1,type);
+                            cube_msg.x = cube.pose.position.x;
+                            cube_msg.y = cube.pose.position.y;
+
+                            ros::Rate r(10);
+                            for (int i = 0; i < 20; i++) {
+                                collector_pub_.publish(cube_msg);
+                                ros::spinOnce();
+                                r.sleep();
+                            }
+
                             if (order_.empty())
-                                return 1;
+                                return true;
+
                         } else
                             ROS_INFO_STREAM("The cube is not in the order");
                     }
                     ros::Duration(1).sleep();
-                    reverse(2);
+                    reverse(3);
                     break;
                 }
             }
@@ -352,4 +371,5 @@ void Navigator::goToCollectionObject(){
     ROS_INFO_STREAM("Reached collection object");
     cube_detected_ = false;
     approaching_cube_ = false;
+    object_detector_count = 0;
 }

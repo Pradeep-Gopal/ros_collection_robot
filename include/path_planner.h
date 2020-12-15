@@ -11,7 +11,7 @@
 class PathPlanner{
 
 private:
-    double clearance_ = 0.3;
+    double clearance_ = 0.4;
 
 public:
     double grid_size;
