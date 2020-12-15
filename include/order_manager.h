@@ -17,7 +17,6 @@ private:
 	std::vector<char>cubes_;
 	std::vector<char>order_;
 	ros::NodeHandle nh_;
-	ros::Publisher order_pub_;
 	int total_cubes_ = 8;
 	int order_size_ = 4;
 	double clearance_ = 1;

@@ -16,6 +16,13 @@ Navigator::Navigator()
     parseWaypoints(fname);
 
     cubes_ = {'A','B','C','D','E','F','G','H'};
+
+    std::string order_str;
+    nh_.getParam("order",order_str);
+
+    for (char const &c: order_str){
+        order_.push_back(c);
+    }
 }
 
 void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
@@ -337,13 +344,19 @@ int main(int argc, char **argv){
 
     OrderManager order_manager;
     order_manager.generateOrder();
-    order_manager.spawnCubes();
 
+//    order_manager.spawnCubes();
     Navigator nav;
-    int success = nav.navigate();
 
-    if (success)
-        ROS_INFO_STREAM("The robot finished searching the space");
-    else
-        ROS_INFO_STREAM("The robot was unable to search the space");
+    for (auto c:nav.order_){
+        ROS_INFO_STREAM(c);
+    }
+
+    ros::spin();
+//    int success = nav.navigate();
+//
+//    if (success)
+//        ROS_INFO_STREAM("The robot finished searching the space");
+//    else
+//        ROS_INFO_STREAM("The robot was unable to search the space");
 }

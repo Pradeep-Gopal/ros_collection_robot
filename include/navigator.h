@@ -46,6 +46,7 @@ private:
     Decoder decoder;
 
 public:
+    std::vector<char> order_;
     std::vector<geometry_msgs::Point> waypoints;
     Navigator();
     void lidarCallback(const sensor_msgs::LaserScan::ConstPtr&);
