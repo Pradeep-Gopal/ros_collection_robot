@@ -25,11 +25,7 @@
 class Navigator{
 
 private:
-    bool determined_pose;
-    bool cube_detected_;
-    bool approaching_cube_;
     bool found_object_;
-    int current_waypoint_;
     double lidar_min_front_;
     PathPlanner path_planner_;
     geometry_msgs::Point cube_position_;
@@ -46,6 +42,10 @@ private:
     Decoder decoder;
 
 public:
+    bool determined_pose;
+    bool cube_detected_;
+    bool approaching_cube_;
+    int current_waypoint_;
     std::vector<char> order_;
     std::vector<geometry_msgs::Point> waypoints;
     Navigator();
