@@ -17,21 +17,27 @@
 #include <tf2_ros/transform_listener.h>
 #include <tf2_geometry_msgs/tf2_geometry_msgs.h>
 
+struct Cube{
+    geometry_msgs::Pose pose;
+    int id;
+};
+
 class Decoder{
 private:
     image_transport::ImageTransport it_;
     image_transport::Subscriber camera_sub_;
     ros::Subscriber camera_info_sub_;
     image_transport::Publisher image_pub_;
-    cv::Mat frame_;
-    bool determined_camera_params;
-
-public:
-    Decoder(ros::NodeHandle&);
     cv::Mat k_matrix_;
     cv::Mat d_matrix_;
     std::string camera_frame_;
+    bool determined_camera_params;
+    std::vector<Cube> cubes_;
+
+public:
+    Decoder(ros::NodeHandle&);
     void cameraCallback(const sensor_msgs::ImageConstPtr&);
     void cameraInfoCallback(const sensor_msgs::CameraInfoConstPtr&);
-    std::pair<int,geometry_msgs::PoseStamped> decode();
+    Cube getCube(geometry_msgs::Point);
 };
+

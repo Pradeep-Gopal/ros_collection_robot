@@ -96,7 +96,14 @@ void Navigator::facePoint(geometry_msgs::Point goal_pt) {
 
     // rotate until heading is correct
     geometry_msgs::Twist vel;
-    vel.angular.z = 0.25*direction;
+
+    double angular_speed;
+    if (abs(diff) > 0.5)
+        angular_speed = .3;
+    else
+        angular_speed = 0.1;
+
+    vel.angular.z = angular_speed*direction;
 
     ros::Rate r(30);
     while(ros::ok()) {
@@ -197,7 +204,12 @@ void Navigator::reverse(double time){
     vel.linear.x = -.1;
     vel.angular.z = 0;
     vel_pub_.publish(vel);
-    ros::Duration(time).sleep();
+    ros::Time start_time = ros::Time::now();
+    while (ros::ok()){
+        ros::spinOnce();
+        if (ros::Time::now() - start_time >= ros::Duration(time))
+            break;
+    }
 }
 
 void Navigator::parseWaypoints(std::string fname) {
@@ -228,9 +240,7 @@ int Navigator::navigate() {
 
             std::vector <geometry_msgs::Point> path = planner.AStar(robot_location_, waypoints[current_waypoint_]);
 
-            if (path.size() == 0){
-                ROS_INFO_STREAM("start:" << robot_location_);
-                ROS_INFO_STREAM("end:" << waypoints[current_waypoint_]);
+            if (path.size() == 0) { // path planning failed
                 stop();
                 return 0;
             }
@@ -238,34 +248,19 @@ int Navigator::navigate() {
             bool reached_waypoint = true;
             for (geometry_msgs::Point pt:path) {
                 reached_waypoint = driveToPoint(pt);
-
                 if (cube_detected_) {
                     stop();
-
-                    ROS_INFO_STREAM("Detected collection object");
                     goToCollectionObject();
-                    ROS_INFO_STREAM("Reached collection object");
+                    Cube cube = decoder.getCube(robot_location_);
 
-                    // wait for camera callbacks to register
-                    ros::Time start_time = ros::Time::now();
-                    while (ros::Time::now() - start_time < ros::Duration(2)){
-                        ros::spinOnce();
+                    if (cube.id == -1)
+                        ROS_WARN_STREAM("Cube could not be decoded");
+                    else {
+                        ROS_INFO_STREAM("The cube type is " << cubes_[cube.id]);
+                        ROS_INFO_STREAM(cube.pose);
                     }
-
-                    std::pair<int, geometry_msgs::PoseStamped> result;
-
-                    for (int i = 0; i < 5; i++){
-                        result = decoder.decode();
-                        if (result.first != -1)
-                            break;
-                        ros::spinOnce();
-                    }
-
-                    ROS_INFO_STREAM("The cube is type '" << cubes_[result.first] << "'");
-                    ROS_INFO_STREAM(result.second.pose);
-
+                    ros::Duration(1).sleep();
                     reverse(2);
-
                     break;
                 }
             }
@@ -279,6 +274,7 @@ int Navigator::navigate() {
 
 void Navigator::goToCollectionObject(){
     approaching_cube_ = true;
+    ROS_INFO_STREAM("Detected collection object");
 
     // find point approach radius away from cube in direction that is closest and not in map
     double approach_radius = 0.7;
@@ -317,33 +313,23 @@ void Navigator::goToCollectionObject(){
     for (geometry_msgs::Point pt:path) {
         driveToPoint(pt);
     }
-    geometry_msgs::Twist vel;
-    vel.linear.x = 0.1;
-    vel_pub_.publish(vel);
-    ros::Duration(0.25).sleep();
     stop();
-
     facePoint(approx_position);
 
-    ros::Duration(0.5).sleep();
-
+    geometry_msgs::Twist vel;
     vel.linear.x = 0.1;
     vel_pub_.publish(vel);
 
     while (ros::ok()) {
+        ros::spinOnce();
         if (lidar_min_front_ <= 0.3)
             break;
-        ros::spinOnce();
     }
 
     stop();
-
+    ROS_INFO_STREAM("Reached collection object");
     cube_detected_ = false;
     approaching_cube_ = false;
-}
-
-void Navigator::driveToDropOff(){
-
 }
 
 int main(int argc, char **argv){
