@@ -1,7 +1,11 @@
 #include "../include/navigator.h"
 
 Navigator::Navigator()
-    : decoder(nh_){
+    : decoder(nh_), order_manager(nh_){
+
+    order_manager.generateOrder();
+    order_manager.spawnCubes();
+
     odom_sub_ = nh_.subscribe("/odom", 10,
                                 &Navigator::odomCallback, this);
     vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1, true);
@@ -46,7 +50,7 @@ void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
         }
     }
 
-    int cone_angle = 20;
+    int cone_angle = 40;
     std::vector<double> front_cone;
     std::vector<double> b;
 
@@ -160,7 +164,7 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
         double distance = sqrt(pow(goal.x-robot_location_.x,2)+
                     pow(goal.y-robot_location_.y,2));
 
-        if (distance > start_distance) {
+        if (distance > start_distance*1.5) {
             stop();
             facePoint(goal);
         }
@@ -263,8 +267,19 @@ int Navigator::navigate() {
                     if (cube.id == -1)
                         ROS_WARN_STREAM("Cube could not be decoded");
                     else {
-                        ROS_INFO_STREAM("The cube type is " << cubes_[cube.id]);
-                        ROS_INFO_STREAM(cube.pose);
+                        char type = cubes_[cube.id];
+
+                        ROS_INFO_STREAM("The cube type is " << type);
+
+                        if (std::find(order_.begin(),order_.end(),type) != order_.end()){
+                            order_.erase(std::find(order_.begin(),order_.end(),type));
+                            ROS_INFO_STREAM("The cube is in the order");
+                            ROS_INFO_STREAM("Collecting cube..");
+                            order_manager.deleteCube(cube.pose.position,type);
+                            if (order_.empty())
+                                return 1;
+                        } else
+                            ROS_INFO_STREAM("The cube is not in the order");
                     }
                     ros::Duration(1).sleep();
                     reverse(2);

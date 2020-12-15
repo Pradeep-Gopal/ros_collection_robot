@@ -42,6 +42,7 @@ private:
     Decoder decoder;
 
 public:
+    OrderManager order_manager;
     bool determined_pose;
     bool cube_detected_;
     bool approaching_cube_;

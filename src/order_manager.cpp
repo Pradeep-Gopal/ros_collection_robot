@@ -1,7 +1,9 @@
 #include "../include/order_manager.h"
 
-OrderManager::OrderManager()
-    :map_object_(clearance_){}
+OrderManager::OrderManager(ros::NodeHandle& nh)
+    :map_object_(clearance_){
+    nh_ = nh;
+}
 
 void OrderManager::generateOrder() {
         ROS_INFO_STREAM("Generating Order ...");
@@ -83,10 +85,13 @@ void OrderManager::spawnCubes() {
             }
         }
 
+        cube_locations_.push_back(pt);
+
         std::string name = "cube_";
         name.push_back(c);
         name += std::to_string(count);
         spawn.request.model_name = name;
+        cube_names_.push_back(name);
         pedestal.request.model_name = "pedestal" + name;
 
         std::string model_path = model_dir + "/cube_" + c + "/model.sdf";
@@ -111,6 +116,30 @@ void OrderManager::spawnCubes() {
         spawn_client.call(spawn);
         count++;
     }
+}
+
+void OrderManager::deleteCube(geometry_msgs::Point location, char type){
+    ros::ServiceClient delete_client = nh_.serviceClient<gazebo_msgs::DeleteModel>("gazebo/delete_model");
+    gazebo_msgs::DeleteModel delete_model;
+
+    bool cube_exists = false;
+    int idx;
+    for (int i = 0; i < cube_locations_.size(); i++){
+        double distance = sqrt(pow(location.x-cube_locations_[i].x,2)+
+                               pow(location.y-cube_locations_[i].y,2));
+
+        if (distance < 1) {
+            idx = i;
+            cube_exists = true;
+            break;
+        }
+    }
+
+    if (cube_exists && type == cubes_[idx]){
+        delete_model.request.model_name = cube_names_[idx];
+        delete_client.call(delete_model);
+    } else
+        ROS_WARN_STREAM("Cube not found.");
 }
 
 int OrderManager::getTotalCubes(){

@@ -6,6 +6,9 @@
 #include <gazebo_msgs/SpawnModel.h>
 #include <gazebo_msgs/SpawnModelRequest.h>
 #include <gazebo_msgs/SpawnModelResponse.h>
+#include <gazebo_msgs/DeleteModel.h>
+#include <gazebo_msgs/DeleteModelRequest.h>
+#include <gazebo_msgs/DeleteModelResponse.h>
 #include "ros/ros.h"
 #include "geometry_msgs/Point.h"
 #include "../include/map.h"
@@ -21,11 +24,14 @@ private:
 	int order_size_ = 4;
 	double clearance_ = 1;
     Map map_object_;
+    std::vector<std::string> cube_names_;
+    std::vector<geometry_msgs::Point> cube_locations_;
 
 public:
-    OrderManager();
+    OrderManager(ros::NodeHandle&);
 	void generateOrder();
 	void spawnCubes();
+	void deleteCube(geometry_msgs::Point location, char type);
 
 	// getters
 	int getTotalCubes();

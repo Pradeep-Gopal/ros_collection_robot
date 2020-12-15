@@ -10,15 +10,12 @@
 int main(int argc, char **argv){
     ros::init(argc, argv, "navigator");
 
-    OrderManager order_manager;
-    order_manager.generateOrder();
-    order_manager.spawnCubes();
-
     Navigator nav;
+
     int success = nav.navigate();
 
     if (success)
-        ROS_INFO_STREAM("The robot finished searching the space");
+        ROS_INFO_STREAM("The robot completed the order");
     else
-        ROS_INFO_STREAM("The robot was unable to search the space");
+        ROS_INFO_STREAM("The robot was unable to complete the order");
 }
