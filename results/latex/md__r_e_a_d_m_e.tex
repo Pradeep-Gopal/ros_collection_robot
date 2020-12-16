@@ -1,0 +1,117 @@
+\href{https://travis-ci.org/Pradeep-Gopal/ros_collection_robot}{\tt } \href{https://coveralls.io/github/Pradeep-Gopal/ros_collection_robot?branch=main}{\tt } \subsection*{\href{https://opensource.org/licenses/MIT}{\tt } }
+
+\subsection*{Authors}
+
+Sprint 1\+:
+\begin{DoxyItemize}
+\item Driver \+: Pradeep Gopal
+\item \hyperlink{class_navigator}{Navigator} \+: Govind Ajith Kumar
+\item Design Keeper \+: Justin Albrecht
+\end{DoxyItemize}
+
+Sprint 2\+:
+\begin{DoxyItemize}
+\item Driver \+: Govind Ajith Kumar
+\item \hyperlink{class_navigator}{Navigator} \+: Justin Albrecht
+\item Design Keeper \+: Pradeep Gopal
+\end{DoxyItemize}
+
+\subsection*{Overview}
+
+Our proposed idea for A\+C\+ME robotics is to build a simulation of an autonomous collection robot in a warehouse setting. Our robot is tasked with searching the entire building to locate and classify the randomly spawned objects. The map will also have stationary obstacles for the robot to navigate around. Depending on the classification, the robot will need to grasp the object and deposit it in the drop zone.
+
+The robot is deployed in a facility to assemble products with different parts. Boxes with QR codes on its sides contain all the parts. The QR code specifies the serial number for the part inside of the cube. Every day during the normal operation of the facility, parts are accidentally dropped in random places around the facility. Our robot finds these and classifies them using the QR code before drop-\/off. To start the simulation the robot is spawned into the building shown. This building is around 600 square meters and is enclosed with several connected rooms. It is assumed that the space has been previously mapped, and the robot has knowledge of the exact location of the walls and obstacles.
+
+At the start of the Gazebo simulation, the robot will receive an order to retrieve a few of the dropped parts. For example, the order may contain three parts (2 of part A and 1 of part F). The robot then searchers the space for the parts in the order. When it encounters one of the objects it will need to return it to the central receiving area (labeled \char`\"{}\+Drop Zone\char`\"{} on the map). The robot that will be used in the simulation is a Turtlebot3 Waffle with an open manipulator arm mounted on top, controlled using Move\+It. It can be controlled by specifying its linear and angular velocity using a topic in R\+OS. We also assume that using the wheel odometry the robot knows its own pose in the world. The robot has two sensors, a L\+I\+D\+AR and camera.
+
+
+
+\subsection*{Agile Iterative Process (A\+IP)}
+
+This project was completed using A\+IP with the involvement of 3 programmers using Pair-\/programming in turns. The detailed Product Backlog, Iteration Backlogs and Work Log are mentioned in the link given below \+:
+
+\href{https://drive.google.com/file/d/1BNjG2if9-G0QJx6BSb_-JIIgaOwBue7m/view?usp=sharing}{\tt Agile Iterative Process}
+
+\subsection*{Sprint Planning Notes}
+
+\href{https://docs.google.com/document/d/1bBEri2t5gSxDZ9FnP-1Wu5RdeCvGUPCNcdnWPu9Y4Dw/edit?usp=sharing}{\tt Google Doc Link for Sprint Planning and notes}
+
+\subsection*{Dependencies}
+
+For this project, you require the following dependencies
+
+
+\begin{DoxyItemize}
+\item Ubuntu 18.\+04
+\item R\+OS Melodic
+\item Gazebo 9.\+x
+\item Googletest
+\item catkin
+\item Open\+CV
+\item Move\+It
+\item Turtle\+Bot3 with Open\+Manipulator
+\end{DoxyItemize}
+
+R\+OS can be installed from the \href{https://wiki.ros.org}{\tt https\+://wiki.\+ros.\+org} site. Click on following link \href{https://wiki.ros.org/melodic/Installation}{\tt here} to navigate to the installation guide for R\+OS.
+
+To install the Turtle\+Bot3 with open manipulator packages, Open a new terminal and follow these commands 
+\begin{DoxyCode}
+cd catkin\_ws/src
+
+git clone https://github.com/ROBOTIS-GIT/turtlebot3\_manipulation.git
+
+git clone https://github.com/ROBOTIS-GIT/turtlebot3\_manipulation\_simulations.git
+
+git clone https://github.com/ROBOTIS-GIT/open\_manipulator\_dependencies.git
+
+cd ..
+
+catkin\_make
+
+source devel/setup.bash
+\end{DoxyCode}
+ \subsection*{Steps to Run the Package}
+
+The package will spawn the Turtle\+Bot3 with Open\+Manipulator in a custom Warehouse environment with obstacles. It also spawns the different objects which has to be collected and delivered by the robot.
+
+
+\begin{DoxyCode}
+cd catkin\_ws/src
+
+git clone https://github.com/Pradeep-Gopal/ros\_collection\_robot.git
+
+cd ..
+
+catkin\_make
+
+source devel/setup.bash
+
+roslaunch ros\_collection\_robot warehouse\_world.launch
+\end{DoxyCode}
+
+
+Now we can run our node and generate the path from a point to another point through the A$\ast$ Algorithm.
+
+To do this, open a new tab and run the node
+
+
+\begin{DoxyCode}
+cd catkin\_ws
+
+source devel/setup.bash
+
+rosrun ros\_collection\_robot navigator
+\end{DoxyCode}
+
+
+Multiple test cases have been written for this second sprint, this can be checked by, opening a new tab and typing the following\+:
+
+
+\begin{DoxyCode}
+cd catkin\_ws
+
+source devel/setup.bash
+
+catkin\_make run\_tests
+\end{DoxyCode}
+ 

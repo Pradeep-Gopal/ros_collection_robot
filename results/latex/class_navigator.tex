@@ -1,0 +1,249 @@
+\hypertarget{class_navigator}{}\section{Navigator Class Reference}
+\label{class_navigator}\index{Navigator@{Navigator}}
+
+
+This class helps the robot navigate inside the warehouse world.  
+
+
+
+
+{\ttfamily \#include $<$navigator.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_navigator_a59230ab4698882f754d5ce275a1a4030}{Navigator} ()
+\begin{DoxyCompactList}\small\item\em Constructor for the \hyperlink{class_navigator}{Navigator} class. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_aacf40aee867f32fd7ebd217323bbae45}{lidar\+Callback} (const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&)
+\begin{DoxyCompactList}\small\item\em Callback to the /scan topic from L\+I\+D\+AR. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_ae9af300677161b9112dcfcb2bdb818e2}{odom\+Callback} (const nav\+\_\+msgs\+::\+Odometry\+::\+Const\+Ptr \&)
+\begin{DoxyCompactList}\small\item\em Callback to the /odom topic. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_a6580377e81d1bcbedf06526c07ab5951}{parse\+Waypoints} (std\+::string)
+\begin{DoxyCompactList}\small\item\em Parse the waypoint Y\+A\+ML file. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_a6dcff036582b164e328baa45f8e567c4}{face\+Point} (geometry\+\_\+msgs\+::\+Point)
+\begin{DoxyCompactList}\small\item\em Rotates the robot to face a waypoint. \end{DoxyCompactList}\item 
+int \hyperlink{class_navigator_a3395b9a8421320ae8910af858651a384}{drive\+To\+Point} (geometry\+\_\+msgs\+::\+Point)
+\begin{DoxyCompactList}\small\item\em Drives the robot to a waypoint. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_aefba9b9c3ef40f77e2b998d56a870f2d}{stop} ()
+\begin{DoxyCompactList}\small\item\em Sets the linear and angular velocity of the robot to zero. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_aeb0340cdf97f9bd06e3903d5a287cf4f}{reverse} (double)
+\begin{DoxyCompactList}\small\item\em Reverses the robot. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_a7564ed301b924f2400b646612a52fb67}{check\+Collection\+Object} (std\+::vector$<$ double $>$)
+\begin{DoxyCompactList}\small\item\em check if the detected cube is in the order or not \end{DoxyCompactList}\item 
+bool \hyperlink{class_navigator_a31877b789e0075b41e61ee5cf02e836d}{navigate} ()
+\begin{DoxyCompactList}\small\item\em Navigates the robot between the predefined waypoints. \end{DoxyCompactList}\item 
+void \hyperlink{class_navigator_a8c3589733dc9aaf4109bddbee827f8eb}{go\+To\+Collection\+Object} ()
+\begin{DoxyCompactList}\small\item\em Moves the robot towards an object which needs to be collected. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_navigator_ac83ca126d5ea51353394f2950426ed30}\label{class_navigator_ac83ca126d5ea51353394f2950426ed30}} 
+bool {\bfseries determined\+\_\+pose}
+\item 
+\mbox{\Hypertarget{class_navigator_a3da5ff304e7a352805f58ab1396c93e8}\label{class_navigator_a3da5ff304e7a352805f58ab1396c93e8}} 
+bool {\bfseries cube\+\_\+detected\+\_\+}
+\item 
+\mbox{\Hypertarget{class_navigator_a55501e55ae8de0744c531421dd3f8ea7}\label{class_navigator_a55501e55ae8de0744c531421dd3f8ea7}} 
+bool {\bfseries approaching\+\_\+cube\+\_\+}
+\item 
+\mbox{\Hypertarget{class_navigator_a6f74f861546daf99dfbe54fe92fd9f31}\label{class_navigator_a6f74f861546daf99dfbe54fe92fd9f31}} 
+int {\bfseries current\+\_\+waypoint\+\_\+}
+\item 
+\mbox{\Hypertarget{class_navigator_a1e9d62a9a446f83347ec6507264de9e3}\label{class_navigator_a1e9d62a9a446f83347ec6507264de9e3}} 
+std\+::vector$<$ char $>$ {\bfseries order\+\_\+}
+\item 
+\mbox{\Hypertarget{class_navigator_a40d886926a48b8aaa3f76f45b5e9e11c}\label{class_navigator_a40d886926a48b8aaa3f76f45b5e9e11c}} 
+std\+::vector$<$ geometry\+\_\+msgs\+::\+Point $>$ {\bfseries waypoints}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class helps the robot navigate inside the warehouse world. 
+
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_navigator_a59230ab4698882f754d5ce275a1a4030}\label{class_navigator_a59230ab4698882f754d5ce275a1a4030}} 
+\index{Navigator@{Navigator}!Navigator@{Navigator}}
+\index{Navigator@{Navigator}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{Navigator()}{Navigator()}}
+{\footnotesize\ttfamily Navigator\+::\+Navigator (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Constructor for the \hyperlink{class_navigator}{Navigator} class. 
+
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_navigator_a7564ed301b924f2400b646612a52fb67}\label{class_navigator_a7564ed301b924f2400b646612a52fb67}} 
+\index{Navigator@{Navigator}!check\+Collection\+Object@{check\+Collection\+Object}}
+\index{check\+Collection\+Object@{check\+Collection\+Object}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{check\+Collection\+Object()}{checkCollectionObject()}}
+{\footnotesize\ttfamily void Navigator\+::check\+Collection\+Object (\begin{DoxyParamCaption}\item[{std\+::vector$<$ double $>$}]{ }\end{DoxyParamCaption})}
+
+
+
+check if the detected cube is in the order or not 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em vector} & containing the cube id\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_a3395b9a8421320ae8910af858651a384}\label{class_navigator_a3395b9a8421320ae8910af858651a384}} 
+\index{Navigator@{Navigator}!drive\+To\+Point@{drive\+To\+Point}}
+\index{drive\+To\+Point@{drive\+To\+Point}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{drive\+To\+Point()}{driveToPoint()}}
+{\footnotesize\ttfamily int Navigator\+::drive\+To\+Point (\begin{DoxyParamCaption}\item[{geometry\+\_\+msgs\+::\+Point}]{goal }\end{DoxyParamCaption})}
+
+
+
+Drives the robot to a waypoint. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Point} & The point to which the robot has to drive to\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+int -\/1 if fails 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_a6dcff036582b164e328baa45f8e567c4}\label{class_navigator_a6dcff036582b164e328baa45f8e567c4}} 
+\index{Navigator@{Navigator}!face\+Point@{face\+Point}}
+\index{face\+Point@{face\+Point}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{face\+Point()}{facePoint()}}
+{\footnotesize\ttfamily void Navigator\+::face\+Point (\begin{DoxyParamCaption}\item[{geometry\+\_\+msgs\+::\+Point}]{goal\+\_\+pt }\end{DoxyParamCaption})}
+
+
+
+Rotates the robot to face a waypoint. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em Point} & The point to which the robot has to face\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_a8c3589733dc9aaf4109bddbee827f8eb}\label{class_navigator_a8c3589733dc9aaf4109bddbee827f8eb}} 
+\index{Navigator@{Navigator}!go\+To\+Collection\+Object@{go\+To\+Collection\+Object}}
+\index{go\+To\+Collection\+Object@{go\+To\+Collection\+Object}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{go\+To\+Collection\+Object()}{goToCollectionObject()}}
+{\footnotesize\ttfamily void Navigator\+::go\+To\+Collection\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Moves the robot towards an object which needs to be collected. 
+
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_aacf40aee867f32fd7ebd217323bbae45}\label{class_navigator_aacf40aee867f32fd7ebd217323bbae45}} 
+\index{Navigator@{Navigator}!lidar\+Callback@{lidar\+Callback}}
+\index{lidar\+Callback@{lidar\+Callback}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{lidar\+Callback()}{lidarCallback()}}
+{\footnotesize\ttfamily void Navigator\+::lidar\+Callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Laser\+Scan\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Callback to the /scan topic from L\+I\+D\+AR. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em msg} & Vector containing the message from /scan topic \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_a31877b789e0075b41e61ee5cf02e836d}\label{class_navigator_a31877b789e0075b41e61ee5cf02e836d}} 
+\index{Navigator@{Navigator}!navigate@{navigate}}
+\index{navigate@{navigate}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{navigate()}{navigate()}}
+{\footnotesize\ttfamily bool Navigator\+::navigate (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Navigates the robot between the predefined waypoints. 
+
+\begin{DoxyReturn}{Returns}
+True if success else False 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_ae9af300677161b9112dcfcb2bdb818e2}\label{class_navigator_ae9af300677161b9112dcfcb2bdb818e2}} 
+\index{Navigator@{Navigator}!odom\+Callback@{odom\+Callback}}
+\index{odom\+Callback@{odom\+Callback}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{odom\+Callback()}{odomCallback()}}
+{\footnotesize\ttfamily void Navigator\+::odom\+Callback (\begin{DoxyParamCaption}\item[{const nav\+\_\+msgs\+::\+Odometry\+::\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Callback to the /odom topic. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em msg} & Message containing the odometry info of the robot \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_a6580377e81d1bcbedf06526c07ab5951}\label{class_navigator_a6580377e81d1bcbedf06526c07ab5951}} 
+\index{Navigator@{Navigator}!parse\+Waypoints@{parse\+Waypoints}}
+\index{parse\+Waypoints@{parse\+Waypoints}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{parse\+Waypoints()}{parseWaypoints()}}
+{\footnotesize\ttfamily void Navigator\+::parse\+Waypoints (\begin{DoxyParamCaption}\item[{std\+::string}]{fname }\end{DoxyParamCaption})}
+
+
+
+Parse the waypoint Y\+A\+ML file. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em fname} & path to the location of the waypoint yaml file\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_aeb0340cdf97f9bd06e3903d5a287cf4f}\label{class_navigator_aeb0340cdf97f9bd06e3903d5a287cf4f}} 
+\index{Navigator@{Navigator}!reverse@{reverse}}
+\index{reverse@{reverse}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{reverse()}{reverse()}}
+{\footnotesize\ttfamily void Navigator\+::reverse (\begin{DoxyParamCaption}\item[{double}]{time }\end{DoxyParamCaption})}
+
+
+
+Reverses the robot. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em distance} & Distance to which the robot has to be reversed\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_navigator_aefba9b9c3ef40f77e2b998d56a870f2d}\label{class_navigator_aefba9b9c3ef40f77e2b998d56a870f2d}} 
+\index{Navigator@{Navigator}!stop@{stop}}
+\index{stop@{stop}!Navigator@{Navigator}}
+\subsubsection{\texorpdfstring{stop()}{stop()}}
+{\footnotesize\ttfamily void Navigator\+::stop (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Sets the linear and angular velocity of the robot to zero. 
+
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{navigator_8h}{navigator.\+h}\item 
+src/\hyperlink{navigator_8cpp}{navigator.\+cpp}\end{DoxyCompactItemize}

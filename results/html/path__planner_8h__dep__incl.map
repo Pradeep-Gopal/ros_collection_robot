@@ -1,0 +1,8 @@
+<map id="include/path_planner.h" name="include/path_planner.h">
+<area shape="rect" id="node2" href="$navigator_8h.html" title="Header for the Navigator Class This is the header file for the Navigator class. Sends navigation comm..." alt="" coords="161,80,292,107"/>
+<area shape="rect" id="node6" href="$path__planner_8cpp.html" title="Source file for the Path planner Class This is the Source file for the path_planner class..." alt="" coords="317,80,459,107"/>
+<area shape="rect" id="node7" href="$path__planner__test_8cpp.html" title="Test for path_planner Class. " alt="" coords="484,80,660,107"/>
+<area shape="rect" id="node3" href="$navigator_8cpp.html" title="Source file for the Navigator Class This is the Source file for the Navigator class. Sends navigation commands to the robot. " alt="" coords="5,155,128,181"/>
+<area shape="rect" id="node4" href="$decoder__test_8cpp.html" title="Test for decoder Class. " alt="" coords="153,155,301,181"/>
+<area shape="rect" id="node5" href="$navigator__test_8cpp.html" title="Test for navigator Class. " alt="" coords="325,155,480,181"/>
+</map>

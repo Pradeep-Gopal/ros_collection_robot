@@ -1,0 +1,9 @@
+<map id="include/navigator.h" name="include/navigator.h">
+<area shape="rect" id="node18" href="$path__planner_8h.html" title="Header for the Path planner Class This is the header file for the path_planner class. Path planning using A star algorithm. " alt="" coords="433,80,597,107"/>
+<area shape="rect" id="node24" href="$polygon_8h.html" title="Header for the Polygon Class This is the header file for the polygon class. " alt="" coords="745,244,879,271"/>
+<area shape="rect" id="node25" href="$line_8h.html" title="Header for the Line Class This is the header file for the line class. " alt="" coords="718,319,829,345"/>
+<area shape="rect" id="node26" href="$node_8h.html" title="Header for the Line Class This is the header file for the node class. Used to define the structure fo..." alt="" coords="530,162,649,189"/>
+<area shape="rect" id="node29" href="$order__manager_8h.html" title="Header for the Line Class This is the header file for the order_manager class. Takes care of managing..." alt="" coords="2541,80,2717,107"/>
+<area shape="rect" id="node40" href="$decoder_8h.html" title="Header file for the decoder class Header file for the decoder class which does the AR tag decoding..." alt="" coords="3717,80,3853,107"/>
+<area shape="rect" id="node23" href="$map_8h.html" title="Header for the map Class. " alt="" coords="1056,162,1171,189"/>
+</map>

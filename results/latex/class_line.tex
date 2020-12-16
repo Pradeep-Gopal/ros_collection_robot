@@ -1,0 +1,73 @@
+\hypertarget{class_line}{}\section{Line Class Reference}
+\label{class_line}\index{Line@{Line}}
+
+
+This class describes the half plane equation between two points.  
+
+
+
+
+{\ttfamily \#include $<$line.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_line_a289e8402ebf5be14865f91cc684c98dc}{Line} (geometry\+\_\+msgs\+::\+Point, geometry\+\_\+msgs\+::\+Point, geometry\+\_\+msgs\+::\+Point)
+\begin{DoxyCompactList}\small\item\em User defined constructor of the line class. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_line_a2984166d7ae6bfe15141a568da773a32}\label{class_line_a2984166d7ae6bfe15141a568da773a32}} 
+void \hyperlink{class_line_a2984166d7ae6bfe15141a568da773a32}{calculate\+Coefficients} ()
+\begin{DoxyCompactList}\small\item\em Calculates line coefficients. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_line_aac9f3d76356545f5ab1cdc3fd52abd22}\label{class_line_aac9f3d76356545f5ab1cdc3fd52abd22}} 
+double {\bfseries a}
+\item 
+\mbox{\Hypertarget{class_line_ac6de6683110d1c49d6d995476fdd31ed}\label{class_line_ac6de6683110d1c49d6d995476fdd31ed}} 
+double {\bfseries b}
+\item 
+\mbox{\Hypertarget{class_line_a98e471f33a380da1baa565813b08dead}\label{class_line_a98e471f33a380da1baa565813b08dead}} 
+double {\bfseries c}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes the half plane equation between two points. 
+
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_line_a289e8402ebf5be14865f91cc684c98dc}\label{class_line_a289e8402ebf5be14865f91cc684c98dc}} 
+\index{Line@{Line}!Line@{Line}}
+\index{Line@{Line}!Line@{Line}}
+\subsubsection{\texorpdfstring{Line()}{Line()}}
+{\footnotesize\ttfamily Line\+::\+Line (\begin{DoxyParamCaption}\item[{geometry\+\_\+msgs\+::\+Point}]{point\+\_\+1,  }\item[{geometry\+\_\+msgs\+::\+Point}]{point\+\_\+2,  }\item[{geometry\+\_\+msgs\+::\+Point}]{test\+\_\+point }\end{DoxyParamCaption})}
+
+
+
+User defined constructor of the line class. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em point\+\_\+1} & The first point \\
+\hline
+\mbox{\tt in}  & {\em point\+\_\+2} & The second point \\
+\hline
+\mbox{\tt in}  & {\em test\+\_\+point} & The point whose position with respect to the line is to be determined\\
+\hline
+\end{DoxyParams}
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em point\+\_\+1} & The first point \\
+\hline
+\mbox{\tt in}  & {\em point\+\_\+2} & The second point \\
+\hline
+\mbox{\tt in}  & {\em test\+\_\+point} & The point whose position with respect to the line is to be determined \\
+\hline
+\end{DoxyParams}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{line_8h}{line.\+h}\item 
+src/\hyperlink{line_8cpp}{line.\+cpp}\end{DoxyCompactItemize}

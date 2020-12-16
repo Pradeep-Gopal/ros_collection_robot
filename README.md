@@ -38,6 +38,9 @@ The robot has two sensors, a LIDAR and camera.
 
 ![Warehouse map](images/map.png)
 
+## Presentation Link
+[Link to a video explaining our project.](https://youtu.be/G2xqrm-4xio)
+
 ## Agile Iterative Process (AIP)
 This project was completed using AIP with the involvement of 3 programmers using Pair-programming in turns. The detailed Product Backlog, Iteration Backlogs and Work Log are mentioned in the link given below :
 

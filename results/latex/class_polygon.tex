@@ -1,0 +1,113 @@
+\hypertarget{class_polygon}{}\section{Polygon Class Reference}
+\label{class_polygon}\index{Polygon@{Polygon}}
+
+
+This class describes a polygon using a set of lines.  
+
+
+
+
+{\ttfamily \#include $<$polygon.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+std\+::vector$<$ geometry\+\_\+msgs\+::\+Point $>$ \hyperlink{class_polygon_ac64090fe1e43e46d7667ffc9021878cd}{get\+Vertices} ()
+\begin{DoxyCompactList}\small\item\em User defined constructor. \end{DoxyCompactList}\item 
+\hyperlink{class_polygon_a31cc06303d544f460bdc89f61b2d03c2}{Polygon} (std\+::vector$<$ geometry\+\_\+msgs\+::\+Point $>$)
+\begin{DoxyCompactList}\small\item\em Gets the vertices. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_polygon_a3232e5ee78e5a4dd771217cab87b0fa4}\label{class_polygon_a3232e5ee78e5a4dd771217cab87b0fa4}} 
+void \hyperlink{class_polygon_a3232e5ee78e5a4dd771217cab87b0fa4}{calculate\+Centroid} ()
+\begin{DoxyCompactList}\small\item\em Calculates the centroid. \end{DoxyCompactList}\item 
+bool \hyperlink{class_polygon_a44c9c10e84f1fa82da3f9353b8961462}{inside\+Object} (geometry\+\_\+msgs\+::\+Point)
+\begin{DoxyCompactList}\small\item\em Checks if a coordinate is inside the polygon. \end{DoxyCompactList}\item 
+geometry\+\_\+msgs\+::\+Point \hyperlink{class_polygon_a9816eb2e2f0fcd11b229d753205b5996}{get\+Centroid} ()
+\begin{DoxyCompactList}\small\item\em Gets the centroid. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class describes a polygon using a set of lines. 
+
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_polygon_a31cc06303d544f460bdc89f61b2d03c2}\label{class_polygon_a31cc06303d544f460bdc89f61b2d03c2}} 
+\index{Polygon@{Polygon}!Polygon@{Polygon}}
+\index{Polygon@{Polygon}!Polygon@{Polygon}}
+\subsubsection{\texorpdfstring{Polygon()}{Polygon()}}
+{\footnotesize\ttfamily Polygon\+::\+Polygon (\begin{DoxyParamCaption}\item[{std\+::vector$<$ geometry\+\_\+msgs\+::\+Point $>$}]{vertices }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Gets the vertices. 
+
+User defined constructor.
+
+\begin{DoxyReturn}{Returns}
+The vertices.
+\end{DoxyReturn}
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em vertices} & The vertices of the polygon \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_polygon_a9816eb2e2f0fcd11b229d753205b5996}\label{class_polygon_a9816eb2e2f0fcd11b229d753205b5996}} 
+\index{Polygon@{Polygon}!get\+Centroid@{get\+Centroid}}
+\index{get\+Centroid@{get\+Centroid}!Polygon@{Polygon}}
+\subsubsection{\texorpdfstring{get\+Centroid()}{getCentroid()}}
+{\footnotesize\ttfamily geometry\+\_\+msgs\+::\+Point Polygon\+::get\+Centroid (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Gets the centroid. 
+
+\begin{DoxyReturn}{Returns}
+The centroid. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polygon_ac64090fe1e43e46d7667ffc9021878cd}\label{class_polygon_ac64090fe1e43e46d7667ffc9021878cd}} 
+\index{Polygon@{Polygon}!get\+Vertices@{get\+Vertices}}
+\index{get\+Vertices@{get\+Vertices}!Polygon@{Polygon}}
+\subsubsection{\texorpdfstring{get\+Vertices()}{getVertices()}}
+{\footnotesize\ttfamily std\+::vector$<$ geometry\+\_\+msgs\+::\+Point $>$ Polygon\+::get\+Vertices (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+User defined constructor. 
+
+Gets the vertices.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em vertices} & The vertices of the polygon\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The vertices. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_polygon_a44c9c10e84f1fa82da3f9353b8961462}\label{class_polygon_a44c9c10e84f1fa82da3f9353b8961462}} 
+\index{Polygon@{Polygon}!inside\+Object@{inside\+Object}}
+\index{inside\+Object@{inside\+Object}!Polygon@{Polygon}}
+\subsubsection{\texorpdfstring{inside\+Object()}{insideObject()}}
+{\footnotesize\ttfamily bool Polygon\+::inside\+Object (\begin{DoxyParamCaption}\item[{geometry\+\_\+msgs\+::\+Point}]{coord }\end{DoxyParamCaption})}
+
+
+
+Checks if a coordinate is inside the polygon. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em coord} & The coordinate\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Boolean of the presence (true or false) 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{polygon_8h}{polygon.\+h}\item 
+src/\hyperlink{polygon_8cpp}{polygon.\+cpp}\end{DoxyCompactItemize}

@@ -1,0 +1,8 @@
+<map id="include/order_manager.h" name="include/order_manager.h">
+<area shape="rect" id="node2" href="$navigator_8h.html" title="Header for the Navigator Class This is the header file for the Navigator class. Sends navigation comm..." alt="" coords="161,87,292,114"/>
+<area shape="rect" id="node6" href="$order__manager_8cpp.html" title="Source File for the Line Class This is the Source file for the order_manager class. Takes care of managing orders to be fulfilled by the robot. " alt="" coords="316,87,471,114"/>
+<area shape="rect" id="node7" href="$order__manager__test_8cpp.html" title="Test for order_manager Class. " alt="" coords="495,80,630,121"/>
+<area shape="rect" id="node3" href="$navigator_8cpp.html" title="Source file for the Navigator Class This is the Source file for the Navigator class. Sends navigation commands to the robot. " alt="" coords="5,169,128,196"/>
+<area shape="rect" id="node4" href="$decoder__test_8cpp.html" title="Test for decoder Class. " alt="" coords="153,169,301,196"/>
+<area shape="rect" id="node5" href="$navigator__test_8cpp.html" title="Test for navigator Class. " alt="" coords="325,169,480,196"/>
+</map>
