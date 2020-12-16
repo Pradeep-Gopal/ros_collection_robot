@@ -1,0 +1,123 @@
+\hypertarget{class_decoder}{}\section{Decoder Class Reference}
+\label{class_decoder}\index{Decoder@{Decoder}}
+
+
+This class does the AR code decoding and checks if cube exists in order.  
+
+
+
+
+{\ttfamily \#include $<$decoder.\+h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_decoder_a4ffe94fb988df3f66811de2c38c81d09}{Decoder} (ros\+::\+Node\+Handle \&)
+\begin{DoxyCompactList}\small\item\em Constructs a new instance. Initializes the callback functions. \end{DoxyCompactList}\item 
+void \hyperlink{class_decoder_ad1a01f7987bb122964af9ca6464189b5}{camera\+Callback} (const sensor\+\_\+msgs\+::\+Image\+Const\+Ptr \&)
+\begin{DoxyCompactList}\small\item\em Camera callback which reads from the camera R\+OS topic. \end{DoxyCompactList}\item 
+void \hyperlink{class_decoder_addeeacb824bc9fb0ecd05b04a842c033}{camera\+Info\+Callback} (const sensor\+\_\+msgs\+::\+Camera\+Info\+Const\+Ptr \&)
+\begin{DoxyCompactList}\small\item\em Callback to store the information of the camera. \end{DoxyCompactList}\item 
+\hyperlink{struct_cube}{Cube} \hyperlink{class_decoder_a3bb9712e4f2eca33efb2382221b501ad}{get\+Cube} (geometry\+\_\+msgs\+::\+Point)
+\begin{DoxyCompactList}\small\item\em Gets the cube. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_decoder_a6157c376feee37dcaa751e00fcc4f83f}\label{class_decoder_a6157c376feee37dcaa751e00fcc4f83f}} 
+bool {\bfseries determined\+\_\+camera\+\_\+params}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class does the AR code decoding and checks if cube exists in order. 
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_decoder_a4ffe94fb988df3f66811de2c38c81d09}\label{class_decoder_a4ffe94fb988df3f66811de2c38c81d09}} 
+\index{Decoder@{Decoder}!Decoder@{Decoder}}
+\index{Decoder@{Decoder}!Decoder@{Decoder}}
+\subsubsection{\texorpdfstring{Decoder()}{Decoder()}}
+{\footnotesize\ttfamily Decoder\+::\+Decoder (\begin{DoxyParamCaption}\item[{ros\+::\+Node\+Handle \&}]{nh }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructs a new instance. Initializes the callback functions. 
+
+M\+IT License Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \char`\"{}\+Software\char`\"{}), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions\+: The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. T\+HE S\+O\+F\+T\+W\+A\+RE IS P\+R\+O\+V\+I\+D\+ED \char`\"{}\+A\+S I\+S\char`\"{}, W\+I\+T\+H\+O\+UT W\+A\+R\+R\+A\+N\+TY OF A\+NY K\+I\+ND, E\+X\+P\+R\+E\+SS OR I\+M\+P\+L\+I\+ED, I\+N\+C\+L\+U\+D\+I\+NG B\+UT N\+OT L\+I\+M\+I\+T\+ED TO T\+HE W\+A\+R\+R\+A\+N\+T\+I\+ES OF M\+E\+R\+C\+H\+A\+N\+T\+A\+B\+I\+L\+I\+TY, F\+I\+T\+N\+E\+SS F\+OR A P\+A\+R\+T\+I\+C\+U\+L\+AR P\+U\+R\+P\+O\+SE A\+ND N\+O\+N\+I\+N\+F\+R\+I\+N\+G\+E\+M\+E\+NT. IN NO E\+V\+E\+NT S\+H\+A\+LL T\+HE A\+U\+T\+H\+O\+RS OR C\+O\+P\+Y\+R\+I\+G\+HT H\+O\+L\+D\+E\+RS BE L\+I\+A\+B\+LE F\+OR A\+NY C\+L\+A\+IM, D\+A\+M\+A\+G\+ES OR O\+T\+H\+ER L\+I\+A\+B\+I\+L\+I\+TY, W\+H\+E\+T\+H\+ER IN AN A\+C\+T\+I\+ON OF C\+O\+N\+T\+R\+A\+CT, T\+O\+RT OR O\+T\+H\+E\+R\+W\+I\+SE, A\+R\+I\+S\+I\+NG F\+R\+OM, O\+UT OF OR IN C\+O\+N\+N\+E\+C\+T\+I\+ON W\+I\+TH T\+HE S\+O\+F\+T\+W\+A\+RE OR T\+HE U\+SE OR O\+T\+H\+ER D\+E\+A\+L\+I\+N\+GS IN T\+HE S\+O\+F\+T\+W\+A\+RE. 
+\begin{DoxyParams}{Parameters}
+{\em nh} & \hyperlink{class_node}{Node} Handle \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_decoder_ad1a01f7987bb122964af9ca6464189b5}\label{class_decoder_ad1a01f7987bb122964af9ca6464189b5}} 
+\index{Decoder@{Decoder}!camera\+Callback@{camera\+Callback}}
+\index{camera\+Callback@{camera\+Callback}!Decoder@{Decoder}}
+\subsubsection{\texorpdfstring{camera\+Callback()}{cameraCallback()}}
+{\footnotesize\ttfamily void Decoder\+::camera\+Callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Image\+Const\+Ptr \&}]{msg }\end{DoxyParamCaption})}
+
+
+
+Camera callback which reads from the camera R\+OS topic. 
+
+Callback for the Camera Also detects the presence of an AR tag in the frame.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em camera} & message from the rostopic\\
+\hline
+\mbox{\tt in}  & {\em msg} & The message \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_decoder_addeeacb824bc9fb0ecd05b04a842c033}\label{class_decoder_addeeacb824bc9fb0ecd05b04a842c033}} 
+\index{Decoder@{Decoder}!camera\+Info\+Callback@{camera\+Info\+Callback}}
+\index{camera\+Info\+Callback@{camera\+Info\+Callback}!Decoder@{Decoder}}
+\subsubsection{\texorpdfstring{camera\+Info\+Callback()}{cameraInfoCallback()}}
+{\footnotesize\ttfamily void Decoder\+::camera\+Info\+Callback (\begin{DoxyParamCaption}\item[{const sensor\+\_\+msgs\+::\+Camera\+Info\+Const\+Ptr \&}]{cam\+Info\+\_\+msg }\end{DoxyParamCaption})}
+
+
+
+Callback to store the information of the camera. 
+
+Callback for the Camera Info Callback.
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em message} & containing the camera info\\
+\hline
+\mbox{\tt in}  & {\em cam\+Info\+\_\+msg} & The camera information message \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+None 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_decoder_a3bb9712e4f2eca33efb2382221b501ad}\label{class_decoder_a3bb9712e4f2eca33efb2382221b501ad}} 
+\index{Decoder@{Decoder}!get\+Cube@{get\+Cube}}
+\index{get\+Cube@{get\+Cube}!Decoder@{Decoder}}
+\subsubsection{\texorpdfstring{get\+Cube()}{getCube()}}
+{\footnotesize\ttfamily \hyperlink{struct_cube}{Cube} Decoder\+::get\+Cube (\begin{DoxyParamCaption}\item[{geometry\+\_\+msgs\+::\+Point}]{location }\end{DoxyParamCaption})}
+
+
+
+Gets the cube. 
+
+
+\begin{DoxyParams}[1]{Parameters}
+\mbox{\tt in}  & {\em location} & The location \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+The cube. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{decoder_8h}{decoder.\+h}\item 
+src/\hyperlink{decoder_8cpp}{decoder.\+cpp}\end{DoxyCompactItemize}

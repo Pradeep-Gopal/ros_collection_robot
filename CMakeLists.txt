@@ -54,10 +54,8 @@ add_executable(navigator
         src/line.cpp
         src/polygon.cpp
         src/decoder.cpp
-        src/manipulator.cpp
         src/map.cpp
         src/order_manager.cpp
-        src/controller.cpp
         src/path_planner.cpp
         src/node.cpp
 

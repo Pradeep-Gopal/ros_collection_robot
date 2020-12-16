@@ -1,0 +1,30 @@
+Command:
+
+cpplint $( find . -name \*.hpp -or -name \*.cpp | grep -vE -e "^./build/" -e "^./vendor/" -e "^./docs/" -e "^./results" -e "^./lib"  ) 
+
+
+Result:
+
+Done processing ./src/decoder.cpp
+Done processing ./src/line.cpp
+Done processing ./src/main.cpp
+Done processing ./src/map.cpp
+Done processing ./src/navigator.cpp
+Done processing ./src/node.cpp
+./src/order_manager.cpp:70:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+./src/order_manager.cpp:77:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+./src/order_manager.cpp:129:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+./src/order_manager.cpp:130:  Consider using rand_r(...) instead of rand(...) for improved thread safety.  [runtime/threadsafe_fn] [2]
+Done processing ./src/order_manager.cpp
+Done processing ./src/path_planner.cpp
+Done processing ./src/polygon.cpp
+Done processing ./test/decoder_test.cpp
+Done processing ./test/line_test.cpp
+Done processing ./test/main.cpp
+Done processing ./test/map_test.cpp
+Done processing ./test/navigator_test.cpp
+Done processing ./test/node_test.cpp
+Done processing ./test/order_manager_test.cpp
+Done processing ./test/path_planner_test.cpp
+Done processing ./test/polygon_test.cpp
+Total errors found: 4

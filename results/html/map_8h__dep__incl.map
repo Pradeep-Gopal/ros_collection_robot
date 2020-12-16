@@ -1,0 +1,14 @@
+<map id="include/map.h" name="include/map.h">
+<area shape="rect" id="node2" href="$path__planner_8h.html" title="Header for the Path planner Class This is the header file for the path_planner class. Path planning using A star algorithm. " alt="" coords="265,80,417,107"/>
+<area shape="rect" id="node9" href="$order__manager_8h.html" title="Header for the Line Class This is the header file for the order_manager class. Takes care of managing..." alt="" coords="481,80,645,107"/>
+<area shape="rect" id="node12" href="$map_8cpp.html" title="Source file for the map Class. " alt="" coords="669,80,764,107"/>
+<area shape="rect" id="node13" href="$map__test_8cpp.html" title="Test for map Class. " alt="" coords="788,80,915,107"/>
+<area shape="rect" id="node3" href="$navigator_8h.html" title="Header for the Navigator Class This is the header file for the Navigator class. Sends navigation comm..." alt="" coords="373,162,503,189"/>
+<area shape="rect" id="node7" href="$path__planner_8cpp.html" title="Source file for the Path planner Class This is the Source file for the path_planner class..." alt="" coords="5,162,148,189"/>
+<area shape="rect" id="node8" href="$path__planner__test_8cpp.html" title="Test for path_planner Class. " alt="" coords="173,162,349,189"/>
+<area shape="rect" id="node4" href="$navigator_8cpp.html" title="Source file for the Navigator Class This is the Source file for the Navigator class. Sends navigation commands to the robot. " alt="" coords="217,244,339,271"/>
+<area shape="rect" id="node5" href="$decoder__test_8cpp.html" title="Test for decoder Class. " alt="" coords="364,244,512,271"/>
+<area shape="rect" id="node6" href="$navigator__test_8cpp.html" title="Test for navigator Class. " alt="" coords="537,244,691,271"/>
+<area shape="rect" id="node10" href="$order__manager_8cpp.html" title="Source File for the Line Class This is the Source file for the order_manager class. Takes care of managing orders to be fulfilled by the robot. " alt="" coords="527,162,682,189"/>
+<area shape="rect" id="node11" href="$order__manager__test_8cpp.html" title="Test for order_manager Class. " alt="" coords="707,155,841,196"/>
+</map>

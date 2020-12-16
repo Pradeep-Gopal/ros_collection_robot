@@ -1,0 +1,11 @@
+<map id="include/node.h" name="include/node.h">
+<area shape="rect" id="node2" href="$path__planner_8h.html" title="Header for the Path planner Class This is the header file for the path_planner class. Path planning using A star algorithm. " alt="" coords="300,80,452,107"/>
+<area shape="rect" id="node3" href="$navigator_8h.html" title="Header for the Navigator Class This is the header file for the Navigator class. Sends navigation comm..." alt="" coords="161,155,292,181"/>
+<area shape="rect" id="node9" href="$node_8cpp.html" title="Source file for the Line Class This is the Source file for the node class. Used to define the structu..." alt="" coords="477,80,574,107"/>
+<area shape="rect" id="node10" href="$node__test_8cpp.html" title="Test for node Class. " alt="" coords="599,80,729,107"/>
+<area shape="rect" id="node7" href="$path__planner_8cpp.html" title="Source file for the Path planner Class This is the Source file for the path_planner class..." alt="" coords="317,155,459,181"/>
+<area shape="rect" id="node8" href="$path__planner__test_8cpp.html" title="Test for path_planner Class. " alt="" coords="484,155,660,181"/>
+<area shape="rect" id="node4" href="$navigator_8cpp.html" title="Source file for the Navigator Class This is the Source file for the Navigator class. Sends navigation commands to the robot. " alt="" coords="5,229,128,256"/>
+<area shape="rect" id="node5" href="$decoder__test_8cpp.html" title="Test for decoder Class. " alt="" coords="153,229,301,256"/>
+<area shape="rect" id="node6" href="$navigator__test_8cpp.html" title="Test for navigator Class. " alt="" coords="325,229,480,256"/>
+</map>

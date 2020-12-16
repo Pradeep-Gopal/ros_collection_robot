@@ -1,15 +1,48 @@
+/**
+ * @file navigator.cpp
+ * @author Pradeep Gopal, Justin Albrecht Govind Ajith Kumar
+ * @copyright MIT License
+ * @brief Source file for the Navigator Class
+ * This is the Source file for the Navigator class.
+ * Sends navigation commands to the robot
+ */
+
+/**
+ *MIT License
+ *Copyright (c) 2020 Pradeep Gopal, Justin Albrecht, Govind Ajith Kumar
+ *Permission is hereby granted, free of charge, to any person obtaining a copy
+ *of this software and associated documentation files (the "Software"), to deal
+ *in the Software without restriction, including without limitation the rights
+ *to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ *copies of the Software, and to permit persons to whom the Software is
+ *furnished to do so, subject to the following conditions:
+ *The above copyright notice and this permission notice shall be included in all
+ *copies or substantial portions of the Software.
+ *THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ *IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ *FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ *AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ *LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ *OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ *SOFTWARE.
+ */
+
 #include "../include/navigator.h"
 
+/**
+ * @brief      Constructor for the Navigator class
+ */
 Navigator::Navigator()
-    : decoder(nh_){
+    : decoder(nh_) {
         odom_sub_ = nh_.subscribe("/odom", 10,
                                     &Navigator::odomCallback, this);
 
-        lidar_sub_ = nh_.subscribe("/scan",10,
-                                   &Navigator::lidarCallback, this);
+        lidar_sub_ = nh_.subscribe("/scan", 10,
+                                   &Navigator::lidarCallback,  this);
 
         vel_pub_ = nh_.advertise<geometry_msgs::Twist>("/cmd_vel", 1, true);
-        collector_pub_ = nh_.advertise<ros_collection_robot::Cube>("/collect_cube", 1, true);
+        collector_pub_ = nh_.advertise<ros_collection_robot::Cube>
+                ("/collect_cube", 1, true);
 
         determined_pose = false;
         cube_detected_ = false;
@@ -17,20 +50,26 @@ Navigator::Navigator()
         current_waypoint_ = 0;
         object_detector_count = 0;
         lidar_min_front_ = INFINITY;
-        std::string fname = ros::package::getPath("ros_collection_robot") + "/config/waypoints.yaml";
+        std::string fname = ros::package::getPath("ros_collection_robot")
+                + "/config/waypoints.yaml";
         parseWaypoints(fname);
 
-        cubes_ = {'A','B','C','D','E','F','G','H'};
+        cubes_ = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H'};
 
         std::string order_str;
-        nh_.getParam("order",order_str);
+        nh_.getParam("order", order_str);
 
-        for (char const &c: order_str){
+        for (char const &c : order_str) {
             order_.push_back(c);
         }
 }
 
-void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
+/**
+ * @brief      Callback to the /scan topic from LIDAR
+ * @param[in]  msg  Vector containing the message from /scan topic
+ * @return     None
+ */
+void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg) {
     geometry_msgs::Point point;
 
     for (int i = 0; i < msg->ranges.size(); ++i) {
@@ -66,10 +105,15 @@ void Navigator::lidarCallback(const sensor_msgs::LaserScan::ConstPtr& msg){
 
     front_cone.insert(front_cone.end(), b.begin(), b.end());
 
-    lidar_min_front_ = *std::min_element(front_cone.begin(),front_cone.end());
+    lidar_min_front_ = *std::min_element(front_cone.begin(), front_cone.end());
 }
 
-void Navigator::odomCallback(const nav_msgs::Odometry::ConstPtr &msg){
+/**
+ * @brief      Callback to the /odom topic
+ * @param[in]  msg  Message containing the odometry info of the robot 
+ * @return     None
+ */
+void Navigator::odomCallback(const nav_msgs::Odometry::ConstPtr &msg) {
     geometry_msgs::Pose robot_pose = msg->pose.pose;
 
     robot_location_ = robot_pose.position;
@@ -87,9 +131,16 @@ void Navigator::odomCallback(const nav_msgs::Odometry::ConstPtr &msg){
     determined_pose = true;
 }
 
+/**
+ * @brief      Rotates the robot to face a waypoint
+ *
+ * @param[in]  Point  The point to which the robot has to face
+ * 
+ * @return     None
+ */
 void Navigator::facePoint(geometry_msgs::Point goal_pt) {
     // determine heading necessary to face goal
-    while (!determined_pose){
+    while (!determined_pose) {
         ros::spinOnce();
     }
 
@@ -103,7 +154,7 @@ void Navigator::facePoint(geometry_msgs::Point goal_pt) {
     // determine cw and ccw angles necessary to reach heading
     double diff = goal_heading - robot_rotation_;
 
-    int direction = 1; //-1 for cw 1 for ccw
+    int direction = 1;  // -1 for cw 1 for ccw
     if (diff < 0)
         direction = -1;
 
@@ -122,10 +173,10 @@ void Navigator::facePoint(geometry_msgs::Point goal_pt) {
     vel.angular.z = angular_speed*direction;
 
     ros::Rate r(30);
-    while(ros::ok()) {
+    while (ros::ok()) {
         ros::spinOnce();
         diff = goal_heading - robot_rotation_;
-        if (abs(diff)<0.05)
+        if (abs(diff) < 0.05)
             break;
 
         vel_pub_.publish(vel);
@@ -135,6 +186,13 @@ void Navigator::facePoint(geometry_msgs::Point goal_pt) {
     stop();
 }
 
+/**
+ * @brief      Drives the robot to a waypoint
+ *
+ * @param[in]  Point  The point to which the robot has to drive to
+ *
+ * @return     int -1 if fails
+ */
 int Navigator::driveToPoint(geometry_msgs::Point goal) {
     double pi = 3.14159;
     double heading = atan2(goal.y - robot_location_.y,
@@ -147,7 +205,7 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
     if (abs(diff) > pi)
         diff = 2*pi - abs(diff);
 
-    if (abs(diff) > 0.5){
+    if (abs(diff) > 0.5) {
         stop();
         ros::Duration(0.5).sleep();
         facePoint(goal);
@@ -161,13 +219,13 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
     double kp = 0.2;
     double max_speed = 0.3;
 
-    double start_distance = sqrt(pow(goal.x-robot_location_.x,2)+
-                           pow(goal.y-robot_location_.y,2));
+    double start_distance = sqrt(pow(goal.x-robot_location_.x, 2)+
+                           pow(goal.y-robot_location_.y, 2));
 
-    while(ros::ok()) {
+    while (ros::ok()) {
         ros::spinOnce();
-        double distance = sqrt(pow(goal.x-robot_location_.x,2)+
-                    pow(goal.y-robot_location_.y,2));
+        double distance = sqrt(pow(goal.x-robot_location_.x, 2)+
+                    pow(goal.y-robot_location_.y, 2));
 
         if (distance > start_distance*1.5) {
             stop();
@@ -181,7 +239,7 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
 
         double diff = heading - robot_rotation_;
 
-        int direction = 1; // -1 for cw 1 for ccw
+        int direction = 1;  // -1 for cw 1 for ccw
         if (diff < 0)
             direction = -1;
 
@@ -208,26 +266,44 @@ int Navigator::driveToPoint(geometry_msgs::Point goal) {
     }
 }
 
-void Navigator::stop(){
+/**
+ * @brief      Sets the linear and angular velocity of the robot to zero
+ * @return     None
+ */
+void Navigator::stop() {
     geometry_msgs::Twist vel;
     vel.linear.x = 0;
     vel.angular.z = 0;
     vel_pub_.publish(vel);
 }
 
-void Navigator::reverse(double time){
+/**
+ * @brief      Reverses the robot
+ *
+ * @param[in]  distance  Distance to which the robot has to be reversed
+ * 
+ * @return     None
+ */
+void Navigator::reverse(double time) {
     geometry_msgs::Twist vel;
     vel.linear.x = -.1;
     vel.angular.z = 0;
     vel_pub_.publish(vel);
     ros::Time start_time = ros::Time::now();
-    while (ros::ok()){
+    while (ros::ok()) {
         ros::spinOnce();
         if (ros::Time::now() - start_time >= ros::Duration(time))
             break;
     }
 }
 
+/**
+ * @brief      Parse the waypoint YAML file
+ *
+ * @param[in]  fname  path to the location of the waypoint yaml file
+ * 
+ * @return     None
+ */
 void Navigator::parseWaypoints(std::string fname) {
     YAML::Node data = YAML::LoadFile(fname);
     YAML::Node waypoint_data = data["waypoints"];
@@ -240,10 +316,15 @@ void Navigator::parseWaypoints(std::string fname) {
     }
 }
 
+/**
+ * @brief      Navigates the robot between the predefined waypoints
+ *
+ * @return     True if success else False
+ */
 bool Navigator::navigate() {
     while (ros::ok()) {
-        if(determined_pose) {
-            if (current_waypoint_ == waypoints.size()){
+        if (determined_pose) {
+            if (current_waypoint_ == waypoints.size()) {
                 stop();
                 return false;
             }
@@ -251,18 +332,22 @@ bool Navigator::navigate() {
             if (planner.map.insideObstacle(waypoints[current_waypoint_]))
                 current_waypoint_++;
 
-            ROS_INFO_STREAM("Driving to point (" << waypoints[current_waypoint_].x << ","
-                                                 << waypoints[current_waypoint_].y << ")");
+            ROS_INFO_STREAM(
+                    "Driving to point (" <<
+                    waypoints[current_waypoint_].x << ","
+                    << waypoints[current_waypoint_].y << ")");
 
-            std::vector <geometry_msgs::Point> path = planner.AStar(robot_location_, waypoints[current_waypoint_]);
+            std::vector <geometry_msgs::Point> path =
+                    planner.AStar(robot_location_,
+                                  waypoints[current_waypoint_]);
 
-            if (path.size() == 0) { // path planning failed
+            if (path.size() == 0) {  // path planning failed
                 stop();
                 return false;
             }
 
             bool reached_waypoint = true;
-            for (geometry_msgs::Point pt:path) {
+            for (geometry_msgs::Point pt : path) {
                 reached_waypoint = driveToPoint(pt);
                 if (cube_detected_) {
                     stop();
@@ -271,19 +356,21 @@ bool Navigator::navigate() {
                     ROS_INFO_STREAM("Decoding cube");
                     Cube cube = decoder.getCube(robot_location_);
 
-                    if (cube.id == -1)
+                    if (cube.id == -1) {
                         ROS_WARN_STREAM("Cube could not be decoded");
-                    else {
+                    } else {
                         char type = cubes_[cube.id];
 
                         ROS_INFO_STREAM("The cube type is " << type);
 
-                        if (std::find(order_.begin(),order_.end(),type) != order_.end()){
-                            order_.erase(std::find(order_.begin(),order_.end(),type));
+                        if (std::find(order_.begin(), order_.end(),
+                                      type) != order_.end()) {
+                            order_.erase(std::find(order_.begin(),
+                                                   order_.end(), type));
                             ROS_INFO_STREAM("The cube is in the order");
                             ROS_INFO_STREAM("Collecting cube..");
                             ros_collection_robot::Cube cube_msg;
-                            cube_msg.type = std::string(1,type);
+                            cube_msg.type = std::string(1, type);
                             cube_msg.x = cube.pose.position.x;
                             cube_msg.y = cube.pose.position.y;
 
@@ -294,11 +381,12 @@ bool Navigator::navigate() {
                                 r.sleep();
                             }
 
-                            if (order_.empty())
+                            if (order_.empty()) {
                                 return true;
-
-                        } else
+                            }
+                        } else {
                             ROS_INFO_STREAM("The cube is not in the order");
+                        }
                     }
                     ros::Duration(1).sleep();
                     reverse(3);
@@ -313,45 +401,56 @@ bool Navigator::navigate() {
     }
 }
 
-void Navigator::goToCollectionObject(){
+/**
+ * @brief      Moves the robot towards an object which needs to be collected
+ * 
+ * @return     None
+ */
+void Navigator::goToCollectionObject() {
     approaching_cube_ = true;
     ROS_INFO_STREAM("Detected collection object");
 
-    // find point approach radius away from cube in direction that is closest and not in map
+    // find point approach radius away from cube
+    // in direction that is closest and not in map
     double approach_radius = 0.7;
     std::vector<geometry_msgs::Point> approach_candidates;
     std::vector<double> distances;
-    std::vector<std::pair<double,double>> directions = {std::pair<double,double>(0,-approach_radius),
-                                                        std::pair<double,double>(0,approach_radius),
-                                                        std::pair<double,double>(-approach_radius,0),
-                                                        std::pair<double,double>(approach_radius,0)};
+    std::vector<std::pair<double, double>> directions =
+            {std::pair<double, double>(0, -approach_radius),
+            std::pair<double, double>(0, approach_radius),
+            std::pair<double, double>(-approach_radius, 0),
+            std::pair<double, double>(approach_radius, 0)};
 
-    geometry_msgs::Point approx_position; //saving current cube position
+    geometry_msgs::Point approx_position;  // saving current cube position
     approx_position.x = cube_position_.x;
     approx_position.y = cube_position_.y;
 
-    for (std::pair<double,double> dir:directions) {
+    for (std::pair<double, double> dir : directions) {
         geometry_msgs::Point approach;
         approach.x = approx_position.x + dir.first;
         approach.y = approx_position.y + dir.second;
 
         if (!planner.map.insideObstacle(approach)) {
             approach_candidates.push_back(approach);
-            distances.push_back(sqrt(pow(approach.x - robot_location_.x, 2) + pow(approach.y - robot_location_.y, 2)));
+            distances.push_back(sqrt(pow(approach.x
+            - robot_location_.x, 2) + pow(approach.y - robot_location_.y, 2)));
         }
     }
 
     auto min_dist = std::min_element(distances.begin(), distances.end());
-    geometry_msgs::Point approach_point = approach_candidates[std::distance(distances.begin(), min_dist)];
+    geometry_msgs::Point approach_point =
+            approach_candidates[std::distance(distances.begin(), min_dist)];
 
     // insert cube into map as a circle at approximate position
-    Polygon new_poly = planner.map.polyFromCircle(cube_position_.x,cube_position_.y,0.05);
+    Polygon new_poly = planner.map.polyFromCircle(cube_position_.x,
+                                                  cube_position_.y, 0.05);
     planner.map.addObstacle(new_poly);
 
     // generate path to approach point
-    std::vector<geometry_msgs::Point> path = planner.AStar(robot_location_,approach_point);
+    std::vector<geometry_msgs::Point> path = planner.AStar(robot_location_,
+                                                           approach_point);
 
-    for (geometry_msgs::Point pt:path) {
+    for (geometry_msgs::Point pt : path) {
         driveToPoint(pt);
     }
     stop();
