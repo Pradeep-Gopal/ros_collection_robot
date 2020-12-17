@@ -41,7 +41,7 @@ Decoder::Decoder(ros::NodeHandle& nh)
                                     &Decoder::cameraCallback, this);
         camera_info_sub_ = nh.subscribe("/camera/rgb/camera_info", 10,
                                         &Decoder::cameraInfoCallback, this);
-        image_pub_ = it_.advertise("/decoder/output_video", 1);
+//        image_pub_ = it_.advertise("/decoder/output_video", 1);
         determined_camera_params = false;
     }
 
@@ -152,7 +152,7 @@ void Decoder::cameraCallback(const sensor_msgs::ImageConstPtr& msg) {
     }
 
     cv::aruco::drawDetectedMarkers(cv_ptr->image, markerCorners, marker_ids);
-    image_pub_.publish(cv_ptr->toImageMsg());
+//    image_pub_.publish(cv_ptr->toImageMsg());
 }
 
 /**
